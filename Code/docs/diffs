@@ -1,0 +1,2062 @@
+diff --git a/EvalPrint/EvalPrint.py b/EvalPrint/EvalPrint.py
+index 15baa1f..275b21b 100644
+--- a/EvalPrint/EvalPrint.py
++++ b/EvalPrint/EvalPrint.py
+@@ -12,11 +12,9 @@ MUL = 4
+ def repr_size(s):
+ 	"""Return the representation of S16 or S32 as a string."""
+ 	if   s == S16: 
+-		# raise ExerciseError("repr_size::S16")
+-		return "S16"
++		raise ExerciseError("repr_size::S16")
+ 	elif s == S32: 
+-		# raise ExerciseError("repr_size::S32")
+-		return "S32"
++		raise ExerciseError("repr_size::S32")
+ 	else:
+ 		print "repr_size: unknown", s
+ 		raise ValueError
+@@ -25,11 +23,9 @@ def repr_size(s):
+ def repr_binop(s):
+ 	"""Return the representation of ADD or MUL as a string."""
+ 	if   s == ADD: 
+-		# raise ExerciseError("repr_binop::ADD")
+-		return "ADD"
++		raise ExerciseError("repr_binop::ADD")
+ 	elif s == MUL: 
+-		# raise ExerciseError("repr_binop::MUL")
+-		return "MUL"
++		raise ExerciseError("repr_binop::MUL")
+ 	else:
+ 		print "repr_binop: unknown", s
+ 		raise ValueError
+@@ -38,11 +34,9 @@ def repr_binop(s):
+ def str_binop(s):
+ 	"""Return the language-level string of ADD or MUL."""
+ 	if   s == ADD: 
+-		# raise ExerciseError("str_binop::ADD")
+-		return "+"
++		raise ExerciseError("str_binop::ADD")
+ 	elif s == MUL: 
+-		# raise ExerciseError("str_binop::MUL")
+-		return "*"
++		raise ExerciseError("str_binop::MUL")
+ 	else:
+ 		print "str_binop: unknown", s
+ 		raise ValueError
+@@ -74,8 +68,7 @@ class Variable(EvalPrint):
+ 
+ 	# Exercise:  just return the name of the variable.
+ 	def __str__(self):
+-		# raise ExerciseError("Variable::__str__")
+-		return self.name
++		raise ExerciseError("Variable::__str__")
+ 
+ 	# Exercise:  return the exact string required to construct a duplicate of 
+ 	# this Variable object, including the name in self.name and the size in 
+@@ -84,9 +77,8 @@ class Variable(EvalPrint):
+ 	# Hint for name:  Python will represent the string for you if you use the
+ 	# "%r" format string token.
+ 	def __repr__(self):
+-	#	sr = repr_size(self.size)
+-	#	raise ExerciseError("Variable::__repr__")
+-		return "Variable(%r,%s)" % (self.name,repr_size(self.size))
++		sr = repr_size(self.size)
++		raise ExerciseError("Variable::__repr__")
+ 
+ 	# Equality checking:  the types match, and the name and size fields do too
+ 	def __eq__(self,other):
+@@ -129,16 +121,14 @@ class Var(Expr):
+ 	# Hint:  if you have already coded the __str__ function for another object 
+ 	# type, you can use ("%s" % other_object) to get its string.
+ 	def __str__(self):
+-	# raise ExerciseError("Var::__str__")
+-		return "%s" % self.var
++		raise ExerciseError("Var::__str__")
+ 
+ 	# Exercise:  return the exact string required to construct a duplicate of 
+ 	# this Var object, including the variable held in self.var.
+ 	# Hint:  if you have already coded the __repr__ function for another object
+ 	# type, you can use ("%r" % other_object) to get its representation string.
+ 	def __repr__(self):
+-	#	raise ExerciseError("Var::__repr__")
+-		return "Var(%r)" % self.var
++		raise ExerciseError("Var::__repr__")
+ 
+ 	# Boilerplate follows
+ 	def __eq__(self,other):
+@@ -168,16 +158,14 @@ class Const(Expr):
+ 
+ 	# Exercise:  return just the integer self.i as a string.
+ 	def __str__(self):
+-	#	raise ExerciseError("Const::__str__")
+-		return "%d" % self.int
++		raise ExerciseError("Const::__str__")
+ 
+ 	# Exercise:  return the exact string required to construct a duplicate of 
+ 	# this Const object, including the integer held in self.int and the size in 
+ 	# self.size.
+ 	def __repr__(self):
+-		#sr = repr_size(self.size)
+-		#raise ExerciseError("Const::__repr__")
+-		return "Const(%d,%s)" % (self.int,repr_size(self.size))
++		sr = repr_size(self.size)
++		raise ExerciseError("Const::__repr__")
+ 
+ 	# Boilerplate follows
+ 	def __eq__(self,other):
+@@ -207,11 +195,13 @@ class Binop(Expr):
+ 
+ 	# Calls str_binop to retrieve the string version of self.binop.
+ 	def __str__(self):
+-		return "(%s%s%s)" % (self.left,str_binop(self.binop),self.right)
++		sb = str_binop(self.binop)
++		raise ExerciseError("Binop::__str__")
+ 
+ 	# Calls repr_binop to retrieve the representation string of self.binop.
+ 	def __repr__(self):
+-		return "Binop(%r,%s,%r)" % (self.left,repr_binop(self.binop),self.right)
++		rb = repr_binop(self.binop)
++		raise ExerciseError("Binop::__repr__")
+ 
+ 	# Boilerplate follows
+ 	def __hash__(self):
+@@ -243,14 +233,12 @@ class Print(Stmt):
+ 	# Exercise:  the string should be: 'print {self.expr as a string}' without
+ 	# the '{','}' characters.
+ 	def __str__(self):
+-		#raise ExerciseError("Print::__str__")
+-		return "print %s" % self.expr
++		raise ExerciseError("Print::__str__")
+ 
+ 	# Exercise:  return the exact string required to construct a duplicate of 
+ 	# this Print object, including the expression held in self.expr.
+ 	def __repr__(self):
+-		#raise ExerciseError("Print::__repr__")
+-		return "Print(%r)" % self.expr
++		raise ExerciseError("Print::__repr__")
+ 
+ 	# Boilerplate follows
+ 	def __hash__(self):
+@@ -279,15 +267,13 @@ class Assign(Stmt):
+ 	# Exercise:  the string should be '{var as a string} = { expr as a string }",
+ 	# not including the '{' characters.
+ 	def __str__(self):
+-		return "%s = %s" % (self.var,self.expr)
+-		#raise ExerciseError("Assign::__str__")
++		raise ExerciseError("Assign::__str__")
+ 
+ 	# Exercise:  return the exact string required to construct a duplicate of 
+ 	# this Assign object, including the variable held in self.var and the 
+ 	# expression held in self.expr.
+ 	def __repr__(self):
+-		#raise ExerciseError("Assign::__repr__")
+-		return "Assign(%r,%r)" % (self.var,self.expr)
++		raise ExerciseError("Assign::__repr__")
+ 
+ 	# Boilerplate follows
+ 	def __hash__(self):
+diff --git a/EvalPrint/EvalPrintByteCodeInterpreter.py b/EvalPrint/EvalPrintByteCodeInterpreter.py
+index c24706c..33070ff 100644
+--- a/EvalPrint/EvalPrintByteCodeInterpreter.py
++++ b/EvalPrint/EvalPrintByteCodeInterpreter.py
+@@ -59,8 +59,7 @@ class EvalPrintByteCodeInterpreter(Visitor):
+ 		
+ 		:param `.PrintBC` p:
+ 		"""
+-		#raise ExerciseError("EvalPrintByteCodeInterpreter::visit_Print")
+-		print self.Pop()	
++		raise ExerciseError("EvalPrintByteCodeInterpreter::visit_Print")
+ 
+ 	def visit_PushBC(self,p):  
+ 		"""Pushes the :class:`~.EvalPrint.Const` held in *p*'s *op* member onto the
+@@ -68,8 +67,7 @@ class EvalPrintByteCodeInterpreter(Visitor):
+ 		
+ 		:param `.PushBC` p:
+ 		"""
+-		#raise ExerciseError("EvalPrintByteCodeInterpreter::visit_Push")
+-		self.Push(p.op)
++		raise ExerciseError("EvalPrintByteCodeInterpreter::visit_Push")
+ 	
+ 	def visit_AddBC(self,a):
+ 		"""Pops two :class:`~.EvalPrint.Const` values from the stack, adds them,
+@@ -79,8 +77,7 @@ class EvalPrintByteCodeInterpreter(Visitor):
+ 		"""
+ 		c1 = self.Pop()
+ 		c2 = self.Pop()
+-		#raise ExerciseError("EvalPrintByteCodeInterpreter::visit_AddBC")
+-		self.Push(Const(c1.int+c2.int,c1.size))
++		raise ExerciseError("EvalPrintByteCodeInterpreter::visit_AddBC")
+ 		
+ 	def visit_MulBC(self,m):
+ 		"""Pops two :class:`~.EvalPrint.Const` values from the stack, multiplies
+@@ -91,6 +88,5 @@ class EvalPrintByteCodeInterpreter(Visitor):
+ 		"""
+ 		c1 = self.Pop()
+ 		c2 = self.Pop()
+-		#raise ExerciseError("EvalPrintByteCodeInterpreter::visit_MulBC")
+-		self.Push(Const(c1.int*c2.int,c1.size))
++		raise ExerciseError("EvalPrintByteCodeInterpreter::visit_MulBC")
+ 
+diff --git a/EvalPrint/EvalPrintEvaluator.py b/EvalPrint/EvalPrintEvaluator.py
+index 9deeb55..aa2077a 100644
+--- a/EvalPrint/EvalPrintEvaluator.py
++++ b/EvalPrint/EvalPrintEvaluator.py
+@@ -57,8 +57,7 @@ class EvaluatorVisitor(Visitor):
+ 		:param `EvalPrint.Var` *var*: Var to visit.
+ 		:rtype: EvalPrint.Expr
+ 		"""
+-		#raise ExerciseError("EvaluatorVisitor::visit_Var")
+-		return self.visit(var.var)
++		raise ExerciseError("EvaluatorVisitor::visit_Var")
+ 
+ 	# Visit the left and right children, call exec_binop, and return a new constant
+ 	def visit_Binop(self,b):
+@@ -91,11 +90,9 @@ class EvaluatorVisitor(Visitor):
+ 
+ 		"""
+ 		if   b == ADD: 
+-			#raise ExerciseError("EvaluatorVisitor::exec_Binop::ADD")
+-			return li+ri
++			raise ExerciseError("EvaluatorVisitor::exec_Binop::ADD")
+ 		elif b == MUL: 
+-			#raise ExerciseError("EvaluatorVisitor::exec_Binop::MUL")
+-			return li*ri
++			raise ExerciseError("EvaluatorVisitor::exec_Binop::MUL")
+ 		else:
+ 			print "EvaluatorVisitor::visit_Binop:  Unknown binop %d" % b.binop
+ 			raise ValueError
+@@ -108,8 +105,7 @@ class EvaluatorVisitor(Visitor):
+ 		:rtype: EvalPrint.Expr
+ 
+ 		"""
+-		#raise ExerciseError("EvaluatorVisitor::visit_Const")
+-		return const
++		raise ExerciseError("EvaluatorVisitor::visit_Const")
+ 	
+ 	# Call self.visit on the print statement's expression.
+ 	# Use Python's print to print the value returned from self.visit.
+diff --git a/EvalPrint/EvalPrintSimplifier.py b/EvalPrint/EvalPrintSimplifier.py
+index 25791a3..3c1a2a0 100644
+--- a/EvalPrint/EvalPrintSimplifier.py
++++ b/EvalPrint/EvalPrintSimplifier.py
+@@ -19,8 +19,7 @@ class EvalPrintSimplifier(Visitor):
+ 		:rtype: EvalPrint.Expr
+ 		
+ 		"""
+-		#raise ExerciseError("EvalPrintSimplifier::visit_Var")
+-		return v
++		raise ExerciseError("EvalPrintSimplifier::visit_Var")
+ 
+ 	def visit_Const(self,c): 
+ 		""" Simplify, i.e. return directly, Const terms.
+@@ -29,8 +28,7 @@ class EvalPrintSimplifier(Visitor):
+ 		:rtype: EvalPrint.Expr
+ 		
+ 		"""
+-		#raise ExerciseError("EvalPrintSimplifier::visit_Const")
+-		return c
++		raise ExerciseError("EvalPrintSimplifier::visit_Const")
+ 
+ 	def isConst(self,o): 
+ 		"""Helper function to determine whether *o* is an 
+@@ -67,11 +65,9 @@ class EvalPrintSimplifier(Visitor):
+ 			value = None
+ 			
+ 			if b.binop == ADD:
+-				# raise ExerciseError("EvalPrintSimplifier::visit_Binop::ADD")
+-				value = l.int+r.int
++				raise ExerciseError("EvalPrintSimplifier::visit_Binop::ADD")
+ 			elif b.binop == MUL:
+-				# raise ExerciseError("EvalPrintSimplifier::visit_Binop::MUL")
+-				value = l.int*r.int
++				raise ExerciseError("EvalPrintSimplifier::visit_Binop::MUL")
+ 
+ 			# Return the new constant
+ 			return Const(value,l.size)
+@@ -93,8 +89,7 @@ class EvalPrintSimplifier(Visitor):
+ 		"""
+ 
+ 		e = self.visit(p.expr)
+-		#raise ExerciseError("EvalPrintSimplifier::visit_Print")
+-		return Print(e)
++		raise ExerciseError("EvalPrintSimplifier::visit_Print")
+ 
+ 	# Simplify the expression, then create a new Assign object with the
+ 	# existing variable and the simplification.
+@@ -109,5 +104,4 @@ class EvalPrintSimplifier(Visitor):
+ 		"""
+ 
+ 		e = self.visit(a.expr)
+-		#raise ExerciseError("EvalPrintSimplifier::visit_Assign")
+-		return Assign(a.var,e)
+\ No newline at end of file
++		raise ExerciseError("EvalPrintSimplifier::visit_Assign")
+\ No newline at end of file
+diff --git a/EvalPrint/EvalPrintTranslator.py b/EvalPrint/EvalPrintTranslator.py
+index bdcd0e4..808cd50 100644
+--- a/EvalPrint/EvalPrintTranslator.py
++++ b/EvalPrint/EvalPrintTranslator.py
+@@ -35,8 +35,7 @@ class EvalPrintTranslator(Visitor):
+ 		:param `.EvalPrint.Var` i:
+ 		
+ 		"""
+-		#raise ExerciseError("EvalPrintTranslator::visit_Var")
+-		self.Generate(LoadBC(v.var))
++		raise ExerciseError("EvalPrintTranslator::visit_Var")
+ 
+ 	# Generate a PushBC of the Const c.
+ 	def visit_Const (self,c): 
+@@ -45,8 +44,7 @@ class EvalPrintTranslator(Visitor):
+ 		:param `.EvalPrint.Const` c:
+ 		
+ 		"""
+-		#raise ExerciseError("EvalPrintTranslator::visit_Const")
+-		self.Generate(PushBC(c))
++		raise ExerciseError("EvalPrintTranslator::visit_Const")
+ 	
+ 	# 
+ 	def visit_Assign(self,a): 
+@@ -58,8 +56,7 @@ class EvalPrintTranslator(Visitor):
+ 		
+ 		"""
+ 		self.visit(a.expr)
+-		#raise ExerciseError("EvalPrintTranslator::visit_Assign")
+-		self.Generate(StoreBC(a.var))
++		raise ExerciseError("EvalPrintTranslator::visit_Assign")
+ 	
+ 	# Visit the subexpression a.expr to leave its value on the top of the stack.
+ 	# Then, generate a PrintBC instruction.
+@@ -72,8 +69,7 @@ class EvalPrintTranslator(Visitor):
+ 		"""
+ 
+ 		self.visit(p.expr)
+-		#raise ExerciseError("EvalPrintTranslator::visit_Print")
+-		self.Generate(PrintBC())
++		raise ExerciseError("EvalPrintTranslator::visit_Print")
+ 
+ 	# Visit the children b.left and b.right to leave their values on the top of 
+ 	# the stack.  Then, generate an AddBC or MulBC instruction depending upon
+@@ -88,5 +84,4 @@ class EvalPrintTranslator(Visitor):
+ 		"""
+ 		self.visit(b.left)
+ 		self.visit(b.right)
+-		#raise ExerciseError("EvalPrintTranslator::visit_Binop")
+-		self.Generate(AddBC() if b.binop == ADD else MulBC())
++		raise ExerciseError("EvalPrintTranslator::visit_Binop")
+diff --git a/EvalPrint/EvalPrintTypeChecker.py b/EvalPrint/EvalPrintTypeChecker.py
+index fd72b43..4d4f80f 100644
+--- a/EvalPrint/EvalPrintTypeChecker.py
++++ b/EvalPrint/EvalPrintTypeChecker.py
+@@ -42,8 +42,7 @@ class TypeCheckerVisitor(Visitor):
+ 		
+ 		"""
+ 
+-		#raise ExerciseError("TypeCheckerVisitor::visit_Variable")
+-		return v.size
++		raise ExerciseError("TypeCheckerVisitor::visit_Variable")
+ 
+ 	def visit_Var(self,v):
+ 		"""Invokes :meth:`visit` on the 
+@@ -65,8 +64,7 @@ class TypeCheckerVisitor(Visitor):
+ 		vs = self.visit(v.var)
+ 
+ 		# Return the size of the variable
+-		#raise ExerciseError("TypeCheckerVisitor::visit_Var")
+-		return vs
++		raise ExerciseError("TypeCheckerVisitor::visit_Var")
+ 
+ 	def visit_Binop(self,b):
+ 		"""Return the common size of an EvalPrint Binop's left and right children.
+@@ -92,9 +90,7 @@ class TypeCheckerVisitor(Visitor):
+ 		rs = self.visit(b.right)
+ 		
+ 		# Type-checking
+-		#raise ExerciseError("TypeCheckerVisitor::visit_Binop")
+-		if ls != rs:
+-			raise TypeCheckerSizeError(b.left,ls,b.right,rs)
++		raise ExerciseError("TypeCheckerVisitor::visit_Binop")
+ 		
+ 		# If no errors, return the size of the value
+ 		return ls
+@@ -107,8 +103,7 @@ class TypeCheckerVisitor(Visitor):
+ 		:rtype: integer
+ 		
+ 		"""
+-		#raise ExerciseError("TypeCheckerVisitor::visit_Const")
+-		return c.size
++		raise ExerciseError("TypeCheckerVisitor::visit_Const")
+ 	
+ 	# Visit the expression, and return nothing.
+ 	def visit_Print(self,p):
+@@ -160,9 +155,7 @@ class TypeCheckerVisitor(Visitor):
+ 		vs = a.var.size
+ 
+ 		# Type-checking
+-		#raise ExerciseError("TypeCheckerVisitor::visit_Assign")
+-		if vs != es:
+-			raise TypeCheckerSizeError(a.var,a.var.size,a.expr,es)
++		raise ExerciseError("TypeCheckerVisitor::visit_Assign")
+ 		
+ 		# Actions for Assign objects need not return anything
+ 
+diff --git a/Pandemic/Solvers/BVTypeCheck.py b/Pandemic/Solvers/BVTypeCheck.py
+index 1e403d6..a418333 100644
+--- a/Pandemic/Solvers/BVTypeCheck.py
++++ b/Pandemic/Solvers/BVTypeCheck.py
+@@ -49,8 +49,7 @@ class BVTypeChecker(Visitor):
+ 		:rtype: integer
+ 		
+ 		"""
+-		# raise ExerciseError("BVTypeCheck::visit_Constant")
+-		return const.size
++		raise ExerciseError("BVTypeCheck::visit_Constant")
+ 
+ 	def visit_Variable(self,var):
+ 		"""Return the size of *var*, held in its :attr:`~.Variable.size` field.
+@@ -59,8 +58,7 @@ class BVTypeChecker(Visitor):
+ 		:rtype: integer
+ 		
+ 		"""
+-		# raise ExerciseError("BVTypeCheck::visit_Variable")
+-		return var.size
++		raise ExerciseError("BVTypeCheck::visit_Variable")
+ 		
+ 
+ 	def visit_Extract(self,extract):
+@@ -77,18 +75,7 @@ class BVTypeChecker(Visitor):
+ 		def throw_te():
+ 			raise TypeException("%s[%d:%d]: extract bounds bad" % (extract,low,high))
+ 			
+-		# raise ExerciseError("BVTypeCheck::visit_Extract")
+-
+-		if low < 0 or high < 0 or high < low:
+-			throw_te()
+-
+-		size = high-low + 1
+-		sexpr = self.visit(bvexpr)
+-
+-		if high >= sexpr or low >= sexpr or size >= sexpr:
+-			throw_te()
+-
+-		return (high-low)+1
++		raise ExerciseError("BVTypeCheck::visit_Extract")
+ 		
+ 	def visit_Concat(self,concat):
+ 		"""Return the sum of the sizes of *concat*'s `lhs` and
+@@ -98,8 +85,7 @@ class BVTypeChecker(Visitor):
+ 		:rtype: integer
+ 		
+ 		"""
+-		# raise ExerciseError("BVTypeCheck::visit_Concat")
+-		return self.visit(concat.lhs)+self.visit(concat.rhs)
++		raise ExerciseError("BVTypeCheck::visit_Concat")
+ 	
+ 	def CheckNonNegative(self,expr):
+ 		"""Helper function: Ensure that an integer associated with some 
+@@ -137,8 +123,7 @@ class BVTypeChecker(Visitor):
+ 		:rtype: integer
+ 		
+ 		"""
+-		# raise ExerciseError("BVTypeCheck::visit_Repeat")
+-		return self.visit(repeat.lhs)*self.CheckNonNegative(repeat)
++		raise ExerciseError("BVTypeCheck::visit_Repeat")
+ 		
+ 	def visit_ITE(self,ite):
+ 		"""Visit *ite*'s condition field :attr:`~.BVExpr3.cond` and ensure that it
+@@ -154,14 +139,7 @@ class BVTypeChecker(Visitor):
+ 		"""
+ 
+ 		s1,st,sf  = self.visit(ite.cond),self.visit(ite.te),self.visit(ite.fe)
+-		# raise ExerciseError("BVTypeCheck::visit_ITE")
+-		if s1 != 1:
+-			raise TypeException("%s: first argument of size %d > 1" % (ite,s1))
+-		if st != sf:
+-			raise TypeException("%s: branches have different sizes (%d,%d)" %\
+-			(ite,st,sf))
+-		return st
+-	
++		raise ExerciseError("BVTypeCheck::visit_ITE")	
+ 	
+ 	def visit_Extend(self,extend):
+ 		"""Obtain *n*, the amount to extend by calling :meth:`CheckPositive` on 
+@@ -173,8 +151,7 @@ class BVTypeChecker(Visitor):
+ 		:raises: :exc:`TypeException`: If :attr:`~.BVExpr1Int.int` is not positive.
+ 		
+ 		"""
+-		# raise ExerciseError("BVTypeCheck::visit_Extend")
+-		return self.visit(extend.lhs)+self.CheckPositive(extend)
++		raise ExerciseError("BVTypeCheck::visit_Extend")
+ 	
+ 	def visit_Reduced(self,red):
+ 		"""This function is used for all bit-vector functions of the "reduced" 
+@@ -185,9 +162,7 @@ class BVTypeChecker(Visitor):
+ 		:rtype: integer
+ 		
+ 		"""
+-		# raise ExerciseError("BVTypeCheck::visit_Reduced")
+-		dummy = self.visit(red.expr)
+-		return 1
++		raise ExerciseError("BVTypeCheck::visit_Reduced")
+ 
+ 	def visit_ShiftConst(self,shiftconst):
+ 		"""Check that *shiftconst*'s :attr:`~.BVExpr1Int.int` member is positive by
+@@ -198,9 +173,7 @@ class BVTypeChecker(Visitor):
+ 		:rtype: integer
+ 		
+ 		"""
+-		# raise ExerciseError("BVTypeCheck::visit_ShiftConst")
+-		self.CheckPositive(shiftconst)
+-		return self.visit(shiftconst.lhs)
++		raise ExerciseError("BVTypeCheck::visit_ShiftConst")
+ 
+ 	def visit_Unop(self,unop):
+ 		"""Visit *unop*'s *expr* member and return its size.
+@@ -209,8 +182,7 @@ class BVTypeChecker(Visitor):
+ 		:rtype: integer
+ 		
+ 		"""
+-		# raise ExerciseError("BVTypeCheck::visit_Unop")
+-		return self.visit(unop.expr)
++		raise ExerciseError("BVTypeCheck::visit_Unop")
+ 	
+ 	def visit_ShiftBv(self,shiftbv):
+ 		"""Visit *ShiftBv*'s *lhs* and *rhs* members.  Return the size of the *lhs*
+@@ -223,10 +195,7 @@ class BVTypeChecker(Visitor):
+ 		"""
+ 		ls = self.visit(shiftbv.lhs)
+ 		rs = self.visit(shiftbv.rhs)
+-		# raise ExerciseError("BVTypeCheck::visit_ShiftBv")
+-		if ls < rs:
+-			raise TypeException("%s: sizes aren't compatible (%d vs. %d)" % (shiftbv,ls,rs))
+-		return ls
++		raise ExerciseError("BVTypeCheck::visit_ShiftBv")
+ 	
+ 	def visit_Binop(self,binop):
+ 		"""Visit *binop*'s *lhs* and *rhs* members.  Return the size of the *lhs*
+@@ -239,10 +208,7 @@ class BVTypeChecker(Visitor):
+ 		"""
+ 		ls = self.visit(binop.lhs)
+ 		rs = self.visit(binop.rhs)
+-		# raise ExerciseError("BVTypeCheck::visit_Binop")
+-		if ls != rs:
+-			raise TypeException("%s: sizes don't match (%d vs. %d)" % (binop,ls,rs))
+-		return ls
++		raise ExerciseError("BVTypeCheck::visit_Binop")
+ 	
+ 	def visit_Predicate(self,predicate):
+ 		"""Visit *predicate*'s *lhs* and *rhs* members.  Return 1.
+@@ -254,10 +220,7 @@ class BVTypeChecker(Visitor):
+ 		"""
+ 		ls = self.visit(predicate.lhs)
+ 		rs = self.visit(predicate.rhs)
+-		# raise ExerciseError("BVTypeCheck::visit_Predicate")
+-		if ls != rs:
+-			raise TypeException("%s: sizes don't match (%d vs. %d)" % (predicate,ls,rs))
+-		return 1
++		raise ExerciseError("BVTypeCheck::visit_Predicate")
+ 	
+ 	def Default(self,expr):
+ 		"""We override this method from the :class:`~.Visitor.Visitor` class to
+diff --git a/Pandemic/Solvers/BitBlaster.py b/Pandemic/Solvers/BitBlaster.py
+index 8948e1c..3185362 100644
+--- a/Pandemic/Solvers/BitBlaster.py
++++ b/Pandemic/Solvers/BitBlaster.py
+@@ -126,13 +126,7 @@ class BitBlaster(Visitor):
+ 		# This function is called for each bit position i.  It should test the i'th
+ 		# bit in the variable val and return the proper constant.
+ 		def init_fun(i):
+-			# raise ExerciseError("BitBlaster::visit_Constant")
+-			# Bit set
+-			if ((val >> i) & 1) != 0:
+-				return self.pltrue
+-
+-			# Bit clear
+-			return self.plfalse
++			raise ExerciseError("BitBlaster::visit_Constant")
+ 		return self.CreateBV(size,init_fun)
+ 
+ 	def bitblast_EQ_Core(self,le,re,is_ne=False):		
+@@ -152,8 +146,7 @@ class BitBlaster(Visitor):
+ 		val = self.pltrue
+ 		
+ 		def mk_eq_term(i):
+-			# raise ExerciseError("BitBlaster::bitblast_EQ_Core")
+-			return PL.And(val,PL.Iff(le.bits[i],re.bits[i]))
++			raise ExerciseError("BitBlaster::bitblast_EQ_Core")
+ 		
+ 		# Create an equality term for each pair of bits.
+ 		pleq = map(mk_eq_term,xrange(le.size))
+@@ -201,13 +194,7 @@ class BitBlaster(Visitor):
+ 		bv1,bv2 = self.visit(expr.lhs),self.visit(expr.rhs)
+ 		size1,size2 = bv1.size,bv2.size
+ 		def init_fun(i):
+-			# raise ExerciseError("BitBlaster::visit_Concat")
+-			# Index points beyond right-hand size
+-			if i >= size2: 
+-				return bv1.bits[i-size2]
+-			
+-			# Index is within right-hand size
+-			return bv2.bits[i]
++			raise ExerciseError("BitBlaster::visit_Concat")
+ 			
+ 		return self.CreateBV(size1 + size2,init_fun)
+ 	
+@@ -219,8 +206,7 @@ class BitBlaster(Visitor):
+ 		bv,num = self.visit(expr.lhs),expr.int
+ 		size = bv.size * num
+ 		def init_fun(i):
+-			# raise ExerciseError("BitBlaster::visit_Repeat")
+-			return bv.bits[i%bv.size]
++			raise ExerciseError("BitBlaster::visit_Repeat")
+ 		return self.CreateBV(size,init_fun)
+ 		
+ 	def bitblast_Extract(self,bv,high,low):
+@@ -232,8 +218,7 @@ class BitBlaster(Visitor):
+ 		"""
+ 		size = high-low + 1
+ 		def init_fun(i):
+-			# raise ExerciseError("BitBlaster::bitblast_Extract")
+-			return bv.bits[i+low]
++			raise ExerciseError("BitBlaster::bitblast_Extract")
+ 		return self.CreateBV(size,init_fun)
+ 	
+ 	def visit_Extract(self,expr):
+@@ -257,8 +242,7 @@ class BitBlaster(Visitor):
+ 		d = f_make_default(bv)
+ 		new_size = bv.size + num
+ 		def init_fun(i):
+-			# raise ExerciseError("BitBlaster::visit_Extend")
+-			return d if i >= bv.size else bv.bits[i]
++			raise ExerciseError("BitBlaster::visit_Extend")
+ 		return self.CreateBV(new_size,init_fun)
+ 	
+ 	def visit_ZeroExtend(self,expr): 
+@@ -267,8 +251,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def make_default(bv):
+-			# raise ExerciseError("BitBlaster::visit_ZeroExtend")
+-			return self.plfalse
++			raise ExerciseError("BitBlaster::visit_ZeroExtend")
+ 		return self.visit_Extend(expr,make_default)
+ 
+ 	def visit_SignExtend(self,expr): 
+@@ -277,8 +260,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def make_default(bv):
+-			# raise ExerciseError("BitBlaster::visit_SignExtend")
+-			return bv.bits[bv.size-1]
++			raise ExerciseError("BitBlaster::visit_SignExtend")
+ 		return self.visit_Extend(expr,make_default)
+ 	
+ 	def visit_Not(self,expr):
+@@ -289,8 +271,7 @@ class BitBlaster(Visitor):
+ 		bv = self.visit(expr.expr)
+ 		def init_fun(i):
+ 			# Exercise:  for bv's ith bit, create a PL term negating it
+-			# raise ExerciseError("BitBlaster::visit_Not")
+-			return PL.Not(bv.bits[i])
++			raise ExerciseError("BitBlaster::visit_Not")
+ 		return self.CreateBV(bv.size,init_fun)
+ 
+ 	def visit_LogicalBinop(self,expr,f):
+@@ -316,8 +297,7 @@ class BitBlaster(Visitor):
+ 		# r: right BitVector
+ 		# i: current bit position
+ 		def init_fun(l,r,i):
+-			# raise ExerciseError("BitBlaster::visit_And")
+-			return PL.And(l.bits[i],r.bits[i])
++			raise ExerciseError("BitBlaster::visit_And")
+ 		return self.visit_LogicalBinop(expr,init_fun)
+ 
+ 	def visit_Or(self,expr):    
+@@ -326,8 +306,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def init_fun(l,r,i):
+-			# raise ExerciseError("BitBlaster::visit_Or")
+-			return PL.Or(l.bits[i],r.bits[i])
++			raise ExerciseError("BitBlaster::visit_Or")
+ 		return self.visit_LogicalBinop(expr,init_fun)
+ 
+ 	def visit_Xor(self,expr):   
+@@ -336,8 +315,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def init_fun(l,r,i):
+-			# raise ExerciseError("BitBlaster::visit_Xor")
+-			return PL.mk_xor(l.bits[i],r.bits[i])
++			raise ExerciseError("BitBlaster::visit_Xor")
+ 		return self.visit_LogicalBinop(expr,init_fun)
+ 
+ 	def bitblast_ITE(self,plbit,te,fe):
+@@ -348,8 +326,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector
+ 		"""
+ 		def init_fun(i):
+-			# raise ExerciseError("BitBlaster::bitblast_ITE")
+-			return PL.mk_ite(plbit,te.bits[i],fe.bits[i])
++			raise ExerciseError("BitBlaster::bitblast_ITE")
+ 		return self.CreateBV(te.size,init_fun)
+ 	
+ 	def visit_ITE(self,ite):
+@@ -391,8 +368,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector
+ 		"""
+ 		def reducefn(l,r):
+-			# raise ExerciseError("BitBlaster::visit_RedAnd")
+-			return PL.And(l,r)		
++			raise ExerciseError("BitBlaster::visit_RedAnd")
+ 		return self.visit_Reduced(expr,reducefn)	
+ 
+ 	def bitblast_RedOr(self,bv):
+@@ -401,8 +377,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector
+ 		"""
+ 		def reducefn(l,r):
+-			# raise ExerciseError("BitBlaster::bitblast_RedOr")
+-			return PL.Or(l,r)
++			raise ExerciseError("BitBlaster::bitblast_RedOr")
+ 		return self.bitblast_Reduced(bv,reducefn)
+ 
+ 	def visit_RedOr(self,expr):  
+@@ -419,8 +394,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector
+ 		"""
+ 		def reducefn(l,r):
+-			# raise ExerciseError("BitBlaster::visit_RedXor")
+-			return PL.mk_xor(l,r)
++			raise ExerciseError("BitBlaster::visit_RedXor")
+ 		return self.visit_Reduced(expr,reducefn)	
+ 	
+ 	def bit_Add_Zi(self,l,r,c): 
+@@ -434,8 +408,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .PLInternal.PL
+ 		"""
+ 		
+-		# raise ExerciseError("BitBlaster::bit_Add_Zi")
+-		return PL.mk_xor(l,PL.mk_xor(r,c))
++		raise ExerciseError("BitBlaster::bit_Add_Zi")
+ 	
+ 	def bit_Add_Ci(self,l,r,c): 
+ 		"""Helper function for implementing addition.  Given the 
+@@ -447,8 +420,7 @@ class BitBlaster(Visitor):
+ 		:param `.PLInternal.PL` c: carry-in bit
+ 		:rtype: .PLInternal.PL
+ 		"""
+-		# raise ExerciseError("BitBlaster::bit_Add_Ci")
+-		return PL.Or(PL.Or(PL.And(l,r),PL.And(r,c)),PL.And(l,c))
++		raise ExerciseError("BitBlaster::bit_Add_Ci")
+ 
+ 	def bitblast_Add_Core(self,le,re,negated=False):
+ 		"""This function is of the ``bitblast_`` type, i.e., *le* and *re* are 
+@@ -509,9 +481,8 @@ class BitBlaster(Visitor):
+ 		:param `.BV.Neg` ebv:
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+-		# raise ExerciseError("BitBlaster::bitblast_Neg")
+-		# zerobv = None
+-		zerobv = self.CreateBV(ebv.size,lambda i: self.plfalse)
++		raise ExerciseError("BitBlaster::bitblast_Neg")
++		zerobv = None
+ 		return self.bitblast_Sub(zerobv,ebv)
+ 	
+ 	def visit_Neg(self,expr): 
+@@ -552,9 +523,8 @@ class BitBlaster(Visitor):
+ 		:rtype: .PLInternal.PL
+ 		"""
+ 		cout,result = self.bitblast_Sub_Core(le,re)
+-		# raise ExerciseError("BitBlaster::bitblast_ULT")
+-		# ult_bit = None
+-		ult_bit = PL.Not(cout.bits[-1])
++		raise ExerciseError("BitBlaster::bitblast_ULT")
++		ult_bit = None
+ 		return self.simplifier.visit(ult_bit)
+ 
+ 	def visit_ULT(self,expr): 
+@@ -583,9 +553,8 @@ class BitBlaster(Visitor):
+ 		:rtype: .PLInternal.PL
+ 		"""
+ 		ult = self.bitblast_ULT(lbv,rbv)
+-		# raise ExerciseError("BitBlaster::bitblast_SLT")
+-		# signdiff = None
+-		signdiff = PL.mk_xor(lbv.bits[-1],rbv.bits[-1])
++		raise ExerciseError("BitBlaster::bitblast_SLT")
++		signdiff = None
+ 		return self.simplifier.visit(PL.mk_xor(signdiff,ult))
+ 	
+ 	def visit_SLT(self,expr): 
+@@ -632,8 +601,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def move_bit(bv,num,i):
+-			# raise ExerciseError("BitBlaster::bitblast_ShlConst")
+-			return bv.bits[i-num] if i-num >= 0 else self.plfalse
++			raise ExerciseError("BitBlaster::bitblast_ShlConst")
+ 		return self.bitblast_Shift(bv,num,move_bit)
+ 	
+ 	def visit_ShlConst(self,expr): 
+@@ -650,8 +618,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def move_bit(bv,num,i):
+-			# raise ExerciseError("BitBlaster::bitblast_ShrConst")
+-			return bv.bits[i+num] if i+num < bv.size else self.plfalse
++			raise ExerciseError("BitBlaster::bitblast_ShrConst")
+ 		return self.bitblast_Shift(bv,num,move_bit)
+ 
+ 	def visit_ShrConst(self,expr):
+@@ -668,8 +635,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def move_bit(bv,num,i):
+-			# raise ExerciseError("BitBlaster::bitblast_SarConst")
+-			return bv.bits[i+num] if i+num < bv.size else bv.bits[-1]
++			raise ExerciseError("BitBlaster::bitblast_SarConst")
+ 		return self.bitblast_Shift(bv,num,move_bit)
+ 
+ 	def visit_SarConst(self,expr): 
+@@ -686,8 +652,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def move_bit(bv,num,i):
+-			# raise ExerciseError("BitBlaster::bitblast_RolConst")
+-			return bv.bits[(i-num)%bv.size]
++			raise ExerciseError("BitBlaster::bitblast_RolConst")
+ 		return self.bitblast_Shift(bv,num,move_bit)
+ 
+ 	def visit_RolConst(self,expr): 
+@@ -704,8 +669,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def move_bit(bv,num,i):
+-			# raise ExerciseError("BitBlaster::bitblast_RorConst")
+-			return bv.bits[(i+num)%bv.size]
++			raise ExerciseError("BitBlaster::bitblast_RorConst")
+ 		return self.bitblast_Shift(bv,num,move_bit)
+ 
+ 	def visit_RorConst(self,expr): 
+@@ -791,8 +755,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def round_shift(l,i):
+-			# raise ExerciseError("BitBlaster::visit_ShlBv")
+-			return self.bitblast_ShlConst(l,i)
++			raise ExerciseError("BitBlaster::visit_ShlBv")
+ 		return self.visit_ShiftBv(expr,round_shift,lambda x: self.plfalse)
+ 
+ 	def visit_ShrBv(self,expr):
+@@ -801,8 +764,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def round_shift(l,i):
+-			# raise ExerciseError("BitBlaster::visit_ShrBv")
+-			return self.bitblast_ShrConst(l,i)
++			raise ExerciseError("BitBlaster::visit_ShrBv")
+ 		return self.visit_ShiftBv(expr,round_shift,lambda x: self.plfalse)
+ 
+ 	def visit_SarBv(self,expr): 
+@@ -811,8 +773,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def round_shift(l,i):
+-			# raise ExerciseError("BitBlaster::visit_SarBv")
+-			return self.bitblast_SarConst(l,i)
++			raise ExerciseError("BitBlaster::visit_SarBv")
+ 		return self.visit_ShiftBv(expr,round_shift,lambda bv: bv.bits[-1])
+ 
+ 	def visit_RolBv(self,expr): 
+@@ -821,8 +782,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def round_shift(l,i):
+-			# raise ExerciseError("BitBlaster::visit_RolBv")
+-			return self.bitblast_RolConst(l,i)
++			raise ExerciseError("BitBlaster::visit_RolBv")
+ 		return self.visit_ShiftBv(expr,round_shift,None,True)
+ 
+ 	def visit_RorBv(self,expr):
+@@ -831,8 +791,7 @@ class BitBlaster(Visitor):
+ 		:rtype: .BitVector.BitVector		
+ 		"""
+ 		def round_shift(l,i):
+-			# raise ExerciseError("BitBlaster::visit_RorBv")
+-			return self.bitblast_RorConst(l,i)
++			raise ExerciseError("BitBlaster::visit_RorBv")
+ 		return self.visit_ShiftBv(expr,round_shift,None,True)
+ 
+ 	def visit_Mul(self,expr):
+diff --git a/Pandemic/Solvers/PL.py b/Pandemic/Solvers/PL.py
+index 72cf9f0..d342c30 100644
+--- a/Pandemic/Solvers/PL.py
++++ b/Pandemic/Solvers/PL.py
+@@ -60,7 +60,6 @@ class Variable(PLOneOp):
+ 	# Exercise:  consult the test cases to see the expected format for a variable.
+ 	def __str__(self):
+ 		if PLInternal.g_CStylePrinting:
+-		#	raise ExerciseError("Variable::__str__")
+ 			return self.name
+ 		else:
+ 			return self.name
+@@ -82,7 +81,6 @@ class Not(PLOneOp):
+ 	def __str__(self):
+ 		if PLInternal.g_CStylePrinting:
+ 			return "!%s" % self.child
+-		#	raise ExerciseError("Not::__str__")
+ 		else:
+ 			return "!%s" % self.child
+ 
+@@ -103,7 +101,6 @@ class Implies(PLTwoOps):
+ 	def __str__(self):
+ 		if PLInternal.g_CStylePrinting:
+ 			return "(%s ? %s : true)" % (self.left,self.right)
+-		#	raise ExerciseError("Implies::__str__")
+ 		else:
+ 			return "(%s ==> %s)" % (self.left,self.right)
+ 	
+@@ -121,8 +118,7 @@ def mk_xor(l,r):
+ 	:rtype: ~PLInternal.PL
+ 	
+ 	"""
+-#	raise ExerciseError("PL::mk_xor")
+-	return And(Or(l,r),Not(And(l,r)))
++	raise ExerciseError("PL::mk_xor")
+ 	
+ def mk_ite(t1,t2,t3):
+ 	"""Compute the ITE (as a formula, in terms of :class:`~.PLInternal.PL` 
+@@ -134,5 +130,4 @@ def mk_ite(t1,t2,t3):
+ 	:rtype: ~PLInternal.PL
+ 	
+ 	"""
+-#	raise ExerciseError("PL::mk_ite")
+-	return And(Implies(t1,t2),Implies(Not(t1),t3))
++	raise ExerciseError("PL::mk_ite")
+diff --git a/Pandemic/Solvers/PLBruteForceSAT.py b/Pandemic/Solvers/PLBruteForceSAT.py
+index 6d06b91..ab0da83 100644
+--- a/Pandemic/Solvers/PLBruteForceSAT.py
++++ b/Pandemic/Solvers/PLBruteForceSAT.py
+@@ -35,8 +35,7 @@ def make_variable_assignment_pair_lists(list_vars):
+ 	# Return the list [[(v1,False),(v2,True)],...,[(vN,False),(vN,True)]].
+ 	# This can be done with a one-line "map" statement.
+ 
+-	# raise ExerciseError("PLBruteForceSAT::Variable assignment list")
+-	return map(lambda v:[(v,False),(v,True)],list_vars)
++	raise ExerciseError("PLBruteForceSAT::Variable assignment list")
+ 
+ def make_assignment_dictionary(assignment_tuple):
+ 	"""Turn *assignment_tuples*, a tuple of assignment pairs into a dictionary 
+@@ -53,8 +52,7 @@ def make_assignment_dictionary(assignment_tuple):
+ 	# tuples are iterable objects (e.g., "for (var,val) in assignment_tuple" is
+ 	# legitimate code).
+ 
+-	# raise ExerciseError("PLBruteForceSAT::Assignment dictionary")
+-	return { v:a for (v,a) in assignment_tuple }
++	raise ExerciseError("PLBruteForceSAT::Assignment dictionary")
+ 
+ def get_assignment_generator(list_vars):
+ 	"""Given a list of variables, produce an interator that returns one 
+@@ -115,8 +113,7 @@ def brute_force_validity_checker(expr):
+ 	# Remove the execption, and replace "None" in the below with something 
+ 	# created using expr.
+ 	
+-	# raise ExerciseError("BruteForceSAT::Validity checker")
+-	# validity_formula = None
++	raise ExerciseError("BruteForceSAT::Validity checker")
++	validity_formula = None
+ 
+-	validity_formula = Not(expr)
+ 	return brute_force_sat_solver(validity_formula) == None	
+\ No newline at end of file
+diff --git a/Pandemic/Solvers/PLEvaluator.py b/Pandemic/Solvers/PLEvaluator.py
+index 6ade070..2aa09f3 100644
+--- a/Pandemic/Solvers/PLEvaluator.py
++++ b/Pandemic/Solvers/PLEvaluator.py
+@@ -47,8 +47,7 @@ class EvaluatorVisitor(Visitor):
+ 		:rtype: bool
+ 		
+ 		"""
+-		# raise ExerciseError("EvaluatorVisitor::Constant")
+-		return const.value
++		raise ExerciseError("EvaluatorVisitor::Constant")
+ 	
+ 	def visit_Not(self,n):
+ 		"""Return the negation of the result of calling :meth:`visit` on *n*'s 
+@@ -59,8 +58,7 @@ class EvaluatorVisitor(Visitor):
+ 		
+ 		"""
+ 		childval = self.visit(n.child)
+-		# raise ExerciseError("EvaluatorVisitor::Not")
+-		return not childval
++		raise ExerciseError("EvaluatorVisitor::Not")
+ 
+ 	def visit_And(self,n):
+ 		"""Return the boolean AND of the result of calling :meth:`visit` on *n*'s 
+@@ -72,8 +70,7 @@ class EvaluatorVisitor(Visitor):
+ 		"""
+ 		leftval  = self.visit(n.left)
+ 		rightval = self.visit(n.right)
+-		# raise ExerciseError("EvaluatorVisitor::And")
+-		return leftval and rightval
++		raise ExerciseError("EvaluatorVisitor::And")
+ 
+ 	def visit_Or(self,n):
+ 		"""Return the boolean OR of the result of calling :meth:`visit` on *n*'s 
+@@ -85,8 +82,7 @@ class EvaluatorVisitor(Visitor):
+ 		"""
+ 		leftval  = self.visit(n.left)
+ 		rightval = self.visit(n.right)
+-		# raise ExerciseError("EvaluatorVisitor::Or")
+-		return leftval or rightval
++		raise ExerciseError("EvaluatorVisitor::Or")
+ 
+ 	def visit_Implies(self,n):
+ 		"""Return the implies (=>) operator of the result of calling :meth:`visit`
+@@ -98,8 +94,7 @@ class EvaluatorVisitor(Visitor):
+ 		"""
+ 		leftval  = self.visit(n.left)
+ 		rightval = self.visit(n.right)
+-		# raise ExerciseError("EvaluatorVisitor::Implies")
+-		return (leftval == False) or rightval
++		raise ExerciseError("EvaluatorVisitor::Implies")
+ 
+ 	def visit_Iff(self,n):
+ 		"""Return the IFF (<=>) operator of the result of calling :meth:`visit`
+@@ -111,6 +106,5 @@ class EvaluatorVisitor(Visitor):
+ 		"""
+ 		leftval  = self.visit(n.left)
+ 		rightval = self.visit(n.right)
+-		# raise ExerciseError("EvaluatorVisitor::Iff")
+-		return leftval == rightval
++		raise ExerciseError("EvaluatorVisitor::Iff")
+ 	
+\ No newline at end of file
+diff --git a/Pandemic/Solvers/PLSimplifier.py b/Pandemic/Solvers/PLSimplifier.py
+index 6c5e8ef..202a622 100644
+--- a/Pandemic/Solvers/PLSimplifier.py
++++ b/Pandemic/Solvers/PLSimplifier.py
+@@ -50,8 +50,7 @@ class Simplifier(Visitor):
+ 		:rtype: :class:`.PLInternal.PL`
+ 		
+ 		"""
+-		#raise ExerciseError("Simplifier::Variable(_)")
+-		return v
++		raise ExerciseError("Simplifier::Variable(_)")
+ 	
+ 	def visit_Constant(self,c):
+ 		"""Constants cannot be simplified, so return them as-is.
+@@ -60,8 +59,7 @@ class Simplifier(Visitor):
+ 		:rtype: :class:`.PLInternal.PL`
+ 		
+ 		"""
+-		#raise ExerciseError("Simplifier::Constant(_)")
+-		return c
++		raise ExerciseError("Simplifier::Constant(_)")
+ 	
+ 	def visit_Not(self,n):
+ 		"""Simplify *n*'s :class:`~.PLInternal.PL` object *child*.  If the result
+@@ -81,9 +79,8 @@ class Simplifier(Visitor):
+ 			# Exercise:  remove the exception and replace "None" below with a correct
+ 			# declaration for the constant we will return.
+ 			
+-			# raise ExerciseError("Simplifier::Not(Constant(c))")
+-			# cval = None
+-			cval = not schild.child
++			raise ExerciseError("Simplifier::Not(Constant(c))")
++			cval = None
+ 			return Constant(cval)
+ 		
+ 		return Not(schild)
+@@ -102,16 +99,13 @@ class Simplifier(Visitor):
+ 		sleft,sright = self.visit(n.left),self.visit(n.right)
+ 
+ 		if self.is_CFalse(sleft) or self.is_CFalse(sright): 
+-			# raise ExerciseError("Simplifier::And(Constant(False),_) | And(_,Constant(False))")
+-			return self.cfalse
++			raise ExerciseError("Simplifier::And(Constant(False),_) | And(_,Constant(False))")
+ 
+ 		if self.is_CTrue(sleft):
+-			# raise ExerciseError("Simplifier::And(Constant(True),r)")
+-			return sright
++			raise ExerciseError("Simplifier::And(Constant(True),r)")
+ 
+ 		if self.is_CTrue(sright):
+-			# raise ExerciseError("Simplifier::And(l,Constant(True))")
+-			return sleft
++			raise ExerciseError("Simplifier::And(l,Constant(True))")
+ 
+ 		# If no simplification applied, return an And term constructed from the
+ 		# simplified values.
+@@ -132,16 +126,13 @@ class Simplifier(Visitor):
+ 		sleft,sright = self.visit(n.left),self.visit(n.right)
+ 
+ 		if self.is_CTrue(sleft) or self.is_CTrue(sright): 
+-			# raise ExerciseError("Simplifier::Or(Constant(True),_) | Or(_,Constant(True))")
+-			return self.ctrue
++			raise ExerciseError("Simplifier::Or(Constant(True),_) | Or(_,Constant(True))")
+ 		
+ 		if self.is_CFalse(sleft):
+-			# raise ExerciseError("Simplifier::Or(Constant(False),r)")
+-		 	return sright
++			raise ExerciseError("Simplifier::Or(Constant(False),r)")
+ 
+ 		if self.is_CFalse(sright):
+-			# raise ExerciseError("Simplifier::Or(l,Constant(False))")
+-		 	return sleft
++			raise ExerciseError("Simplifier::Or(l,Constant(False))")
+ 
+ 		# If no simplification applied, return an OR term constructed from the
+ 		# simplified values.
+@@ -162,20 +153,16 @@ class Simplifier(Visitor):
+ 		sleft,sright = self.visit(n.left),self.visit(n.right)
+ 
+ 		if self.is_CFalse(sleft):
+-			# raise ExerciseError("Simplifier::Implies(Constant(False),_)")
+-			return self.ctrue
++			raise ExerciseError("Simplifier::Implies(Constant(False),_)")
+ 		
+ 		if self.is_CTrue(sleft):
+-			# raise ExerciseError("Simplifier::Implies(Constant(True),r)")
+-			return sright
++			raise ExerciseError("Simplifier::Implies(Constant(True),r)")
+ 
+ 		if self.is_CTrue(sright): 
+-			# raise ExerciseError("Simplifier::Implies(_,Constant(True))")
+-			return self.ctrue
++			raise ExerciseError("Simplifier::Implies(_,Constant(True))")
+ 
+ 		if self.is_CFalse(sright):
+-			# raise ExerciseError("Simplifier::Implies(l,Constant(False))")
+-			return Not(sleft)
++			raise ExerciseError("Simplifier::Implies(l,Constant(False))")
+ 		
+ 		# If no simplification applied, return an Implies term constructed from the
+ 		# simplified values.
+@@ -198,27 +185,21 @@ class Simplifier(Visitor):
+ 			# Exercise:  remove the exception and replace "None" below with a correct
+ 			# declaration for the constant we will return.
+ 
+-			# raise ExerciseError("Simplifier::Iff(Constant(c1),Constant(c2))")
+-			# cval = None
+-			
+-			cval = sleft.value == sright.value
++			raise ExerciseError("Simplifier::Iff(Constant(c1),Constant(c2))")
++			cval = None
+ 			return Constant(cval)
+ 
+ 		if self.is_Const(sleft):
+ 			if sleft.value:
+-				# raise ExerciseError("Simplifier::Iff(Constant(True),r)")
+-				return sright
++				raise ExerciseError("Simplifier::Iff(Constant(True),r)")
+ 			else:
+-				# raise ExerciseError("Simplifier::Iff(Constant(False),r)")
+-				return Not(sright)
++				raise ExerciseError("Simplifier::Iff(Constant(False),r)")
+ 		
+ 		if self.is_Const(sright):
+ 			if sright.value:
+-				# raise ExerciseError("Simplifier::Iff(l,Constant(True))")
+-				return sleft
++				raise ExerciseError("Simplifier::Iff(l,Constant(True))")
+ 			else:
+-				# raise ExerciseError("Simplifier::Iff(l,Constant(False))")
+-				return Not(sleft)
++				raise ExerciseError("Simplifier::Iff(l,Constant(False))")
+ 		
+ 		# If no simplification applied, return an Iff term constructed from the
+ 		# simplified values.		
+diff --git a/Pandemic/X86/X86DecodeTable.py b/Pandemic/X86/X86DecodeTable.py
+index 1b69f79..6ca3773 100644
+--- a/Pandemic/X86/X86DecodeTable.py
++++ b/Pandemic/X86/X86DecodeTable.py
+@@ -55,7 +55,6 @@ class Direct(X86DECDL):
+ 		:param `.X86Decoder.X86Decoder` decoder:
+ 		:rtype: (:class:`~.MnemElt`, :class:`~.AOTElt` list) 
+ 		"""
+-		#raise ExerciseError("X86DecodeTable::Direct::Decode")
+ 		return (self.mnem,self.opl)
+ 		
+ class Group(X86DECDL):
+@@ -77,8 +76,7 @@ class Group(X86DECDL):
+ 		:param `.X86Decoder.X86Decoder` decoder:
+ 		:rtype: (:class:`~.MnemElt`, :class:`~.AOTElt` list) 
+ 		"""
+-		#raise ExerciseError("X86DecodeTable::Group::Decode")
+-		return self.group[decoder.ModRM.GGG].decode(decoder)
++		raise ExerciseError("X86DecodeTable::Group::Decode")
+ 		
+ class RMGroup(X86DECDL):
+ 	"""Decoder entry corresponding to an "RM group".  I.e., it selects another
+@@ -99,8 +97,7 @@ class RMGroup(X86DECDL):
+ 		:param `.X86Decoder.X86Decoder` decoder:
+ 		:rtype: (:class:`~.MnemElt`, :class:`~.AOTElt` list) 
+ 		"""
+-		#raise ExerciseError("X86DecodeTable::RMGroup::Decode")
+-		return self.group[decoder.ModRM.RM].decode(decoder)
++		raise ExerciseError("X86DecodeTable::RMGroup::Decode")
+ 
+ class SSE(X86DECDL):
+ 	"""Decoder entry for SSE instructions.  It selects one of four decoder 
+@@ -199,8 +196,7 @@ class PredOpSize(Predicated):
+ 		:param `.X86Decoder.X86Decoder` decoder:
+ 		:rtype: bool
+ 		"""
+-		#raise ExerciseError("X86DecodeTable::PredOpSize::cond")
+-		return decoder.sizepfx
++		raise ExerciseError("X86DecodeTable::PredOpSize::cond")
+ 
+ # Predicated upon the ADDRSIZE prefix.
+ class PredAddrSize(Predicated):
+@@ -212,8 +208,7 @@ class PredAddrSize(Predicated):
+ 		:param `.X86Decoder.X86Decoder` decoder:
+ 		:rtype: bool
+ 		"""
+-		#raise ExerciseError("X86DecodeTable::PredAddrSize::cond")
+-		return decoder.addrpfx
++		raise ExerciseError("X86DecodeTable::PredAddrSize::cond")
+ 
+ # Predicated upon ModRM.MOD.
+ class PredMOD(Predicated):
+@@ -226,8 +221,7 @@ class PredMOD(Predicated):
+ 		:param `.X86Decoder.X86Decoder` decoder:
+ 		:rtype: bool
+ 		"""
+-		#raise ExerciseError("X86DecodeTable::PredMOD::cond")
+-		return decoder.ModRM.MOD != 3
++		raise ExerciseError("X86DecodeTable::PredMOD::cond")
+ 
+ Fatal = Fatal()
+ Invalid = InvalidEntry()
+diff --git a/Pandemic/X86/X86Decoder.py b/Pandemic/X86/X86Decoder.py
+index cc798ab..5504a0a 100644
+--- a/Pandemic/X86/X86Decoder.py
++++ b/Pandemic/X86/X86Decoder.py
+@@ -165,8 +165,7 @@ class X86Decoder(Visitor):
+ 		:param `.Exact` i:
+ 		:rtype: :class:`~.Operand`
+ 		"""
+-		#raise ExerciseError("X86Decoder::visit_Exact")
+-		return i.value
++		raise ExerciseError("X86Decoder::visit_Exact")
+ 	
+ 	def visit_ExactSeg(self,i): 
+ 		"""For ExactSeg operand types, return *i*'s *value* field directly if there
+@@ -176,8 +175,7 @@ class X86Decoder(Visitor):
+ 		:param `.ExactSeg` i:
+ 		:rtype: :class:`~.MemExpr`
+ 		"""
+-		#raise ExerciseError("X86Decoder::visit_ExactSeg")
+-		return i.value if not self.segpfx else i.value(self.segpfx)
++		raise ExerciseError("X86Decoder::visit_ExactSeg")
+ 
+ 	def visit_GPart(self,g):         
+ 		"""For GPart operand types, return a register with the same type as *g*'s
+@@ -186,8 +184,7 @@ class X86Decoder(Visitor):
+ 		:param `.GPart` g:
+ 		:rtype: :class:`~.Register`
+ 		"""
+-		#raise ExerciseError("X86Decoder::visit_GPart")
+-		return g.archetype(self.ModRM.GGG)
++		raise ExerciseError("X86Decoder::visit_GPart")
+ 	
+ 	def visit_RegOrMem_Register(self,m): 
+ 		"""For RegOrMem when a register is specified, create a new register of the
+@@ -200,10 +197,8 @@ class X86Decoder(Visitor):
+ 		:rtype: :class:`~.Register`
+ 		"""
+ 		if m.reg is None: 
+-			#raise ExerciseError("X86Decoder::visit_RegOrMem_Register:None")
+-			raise InvalidInstruction()
+-		#raise ExerciseError("X86Decoder::visit_RegOrMem_Register:Default")
+-		return m.reg(self.ModRM.RM)
++			raise ExerciseError("X86Decoder::visit_RegOrMem_Register:None")
++		raise ExerciseError("X86Decoder::visit_RegOrMem_Register:Default")
+ 
+ 	# For ModRM when a memory is specified, create a Mem16 or Mem32 object 
+ 	# depending upon address size, using the information from the ModRM.
+@@ -219,21 +214,16 @@ class X86Decoder(Visitor):
+ 		:rtype: :class:`~.MemExpr`
+ 		"""
+ 		if m.mem is None: 
+-			#raise ExerciseError("X86Decoder::visit_RegOrMem_MemExpr:None")
+-			raise InvalidInstruction()
++			raise ExerciseError("X86Decoder::visit_RegOrMem_MemExpr:None")
+ 		else:
+ 			seg = self.GetSegment()
+ 			
+ 			# Decode a 16-bit ModRM
+ 			if self.addrpfx: 
+-				#raise ExerciseError("X86Decoder::visit_RegOrMem_MemExpr:Mem16")
+-				br,sr,disp,_ = self.ModRM.Interpret()
+-				return Mem16(seg,m.mem,br,sr,disp)
++				raise ExerciseError("X86Decoder::visit_RegOrMem_MemExpr:Mem16")
+ 			 
+ 			# Decode a 32-bit ModRM
+-			#raise ExerciseError("X86Decoder::visit_RegOrMem_MemExpr:Mem32")
+-			br,sr,sf,disp,_ = self.ModRM.Interpret()
+-			return Mem32(seg,m.mem,br,sr,sf,disp)
++			raise ExerciseError("X86Decoder::visit_RegOrMem_MemExpr:Mem32")
+ 
+ 	def visit_Immediate_Ib(self,i):  
+ 		"""Read a byte from the stream, and return it as an immediate.
+@@ -241,8 +231,7 @@ class X86Decoder(Visitor):
+ 		:param `.ImmEnc` i:
+ 		:rtype: :class:`.Ib`
+ 		"""
+-		#raise ExerciseError("X86Decoder::visit_Immediate_Ib")
+-		return Ib(self.Stream.Byte()) 
++		raise ExerciseError("X86Decoder::visit_Immediate_Ib")
+ 
+ 	def visit_Immediate_Iw(self,i):  
+ 		"""Read a word from the stream, and return it as an immediate.
+@@ -250,8 +239,7 @@ class X86Decoder(Visitor):
+ 		:param `.ImmEnc` i:
+ 		:rtype: :class:`.Iw`
+ 		"""
+-		#raise ExerciseError("X86Decoder::visit_Immediate_Iw")
+-		return Iw(self.Stream.Word()) 
++		raise ExerciseError("X86Decoder::visit_Immediate_Iw")
+ 
+ 	def visit_Immediate_Id(self,i):  
+ 		"""Read a dword from the stream, and return it as an immediate.
+@@ -259,8 +247,7 @@ class X86Decoder(Visitor):
+ 		:param `.ImmEnc` i:
+ 		:rtype: :class:`.Id`
+ 		"""
+-		#raise ExerciseError("X86Decoder::visit_Immediate_Id")
+-		return Id(self.Stream.Dword()) 
++		raise ExerciseError("X86Decoder::visit_Immediate_Id")
+ 
+ 	def visit_Immediate_MemExpr(self,i):
+ 		"""Create a :class:`Mem16` or :class:`Mem32` depending upon the address
+@@ -283,13 +270,9 @@ class X86Decoder(Visitor):
+ 		:rtype: :class:`.FarTarget`
+ 		"""
+ 		if self.addrpfx: 
+-			#raise ExerciseError("X86Decoder::visit_Immediate_FarTarget:AP16")
+-			off = self.Stream.Word()
+-			return AP16(self.Stream.Word(),off)
++			raise ExerciseError("X86Decoder::visit_Immediate_FarTarget:AP16")
+ 		else:
+-			#raise ExerciseError("X86Decoder::visit_Immediate_FarTarget:AP32")
+-			off = self.Stream.Dword()
+-			return AP32(self.Stream.Word(),off)
++			raise ExerciseError("X86Decoder::visit_Immediate_FarTarget:AP32")
+ 
+ 	def visit_SignExtImm_Iw(self,i): 
+ 		"""Read a byte from the steam and sign-extend it to a word.
+@@ -297,8 +280,7 @@ class X86Decoder(Visitor):
+ 		:param `.SignedImm` i:
+ 		:rtype: :class:`.Iw`
+ 		"""
+-		#raise ExerciseError("X86Decoder::visit_SignExtImm_Iw")
+-		return Iw(sign_extend_8_16(self.Stream.Byte()))
++		raise ExerciseError("X86Decoder::visit_SignExtImm_Iw")
+ 
+ 	def visit_SignExtImm_Id(self,i): 
+ 		"""Read a byte from the steam and sign-extend it to a dword.
+@@ -306,8 +288,7 @@ class X86Decoder(Visitor):
+ 		:param `.SignedImm` i:
+ 		:rtype: :class:`.Id`
+ 		"""
+-		#raise ExerciseError("X86Decoder::visit_SignExtImm_Id")
+-		return Id(sign_extend_8_32(self.Stream.Byte()))	
++		raise ExerciseError("X86Decoder::visit_SignExtImm_Id")
+ 	
+ 	def visit_SizePrefix(self,z):     
+ 		"""Depending upon the operand size prefix, call :meth:`visit` on either 
+@@ -316,8 +297,7 @@ class X86Decoder(Visitor):
+ 		:param `.SizePrefix` z:
+ 		:rtype: :class:`.Operand`
+ 		"""
+-		#raise ExerciseError("X86Decoder::visit_SizePrefix")
+-		return self.visit(z.yes if self.sizepfx else z.no)
++		raise ExerciseError("X86Decoder::visit_SizePrefix")
+ 
+ 	def visit_AddrPrefix(self,a):    
+ 		"""Depending upon the address size prefix, call :meth:`visit` on either 
+@@ -326,8 +306,7 @@ class X86Decoder(Visitor):
+ 		:param `.AddrPrefix` a:
+ 		:rtype: :class:`.Operand`
+ 		"""
+-		#raise ExerciseError("X86Decoder::visit_AddrPrefix")
+-		return self.visit(a.yes if self.addrpfx else a.no)
++		raise ExerciseError("X86Decoder::visit_AddrPrefix")
+ 
+ 	def oJCommon(self,x): 
+ 		"""Common method for decoding jumps.  Calculate the target of the jump, and
+diff --git a/Pandemic/X86/X86EncodeTable.py b/Pandemic/X86/X86EncodeTable.py
+index f4a8a6c..d843bd2 100644
+--- a/Pandemic/X86/X86EncodeTable.py
++++ b/Pandemic/X86/X86EncodeTable.py
+@@ -40,8 +40,7 @@ class Ordinary(X86Enc):
+ 
+ 		:param `.X86Encoder.X86Encoder` encoder: Encoder object
+ 		"""
+-		#raise ExerciseError("X86EncodeTable::Ordinary")
+-		pass
++		raise ExerciseError("X86EncodeTable::Ordinary")
+ 
+ class Native16(X86Enc):
+ 	"""The encoding method class for X86 instructions that require an opsize
+@@ -52,8 +51,7 @@ class Native16(X86Enc):
+ 
+ 		:param `.X86Encoder.X86Encoder` encoder: Encoder object
+ 		"""
+-		#raise ExerciseError("X86EncodeTable::Native16")
+-		encoder.sizepfx = True
++		raise ExerciseError("X86EncodeTable::Native16")
+ 
+ class ModRMGroup(X86Enc): 
+ 	"""The encoding method class for X86 instructions that are part of a ModRM
+@@ -73,8 +71,7 @@ class ModRMGroup(X86Enc):
+ 
+ 		:param `.X86Encoder.X86Encoder` encoder: Encoder object
+ 		"""
+-		#raise ExerciseError("X86EncodeTable::ModRMGroup")
+-		encoder.ModRM.GGG = self.ggg
++		raise ExerciseError("X86EncodeTable::ModRMGroup")
+ 
+ # Since many of the same operand types are used repeatedly in instruction 
+ # encodings, we create lists for them to simplify the table below.
+diff --git a/Pandemic/X86/X86Encoder.py b/Pandemic/X86/X86Encoder.py
+index 7d55311..4c142fe 100644
+--- a/Pandemic/X86/X86Encoder.py
++++ b/Pandemic/X86/X86Encoder.py
+@@ -194,8 +194,7 @@ class X86Encoder(Visitor2):
+ 		:param `.Operand` op:
+ 		:param `.Exact` i:		
+ 		"""		
+-		#raise ExerciseError("X86Encoder::visit_Exact")
+-		pass
++		raise ExerciseError("X86Encoder::visit_Exact")
+ 
+ 	def visit_ExactSeg(self,op,i): 
+ 		"""For ExactSeg operands, we already know if a segment prefix is required
+@@ -204,8 +203,7 @@ class X86Encoder(Visitor2):
+ 		:param `.Operand` op:
+ 		:param `.ExactSeg` i:		
+ 		"""		
+-		#raise ExerciseError("X86Encoder::visit_ExactSeg")
+-		pass
++		raise ExerciseError("X86Encoder::visit_ExactSeg")
+ 
+ 	def visit_GPart(self,op,g):               
+ 		"""For GPart operands, store the :class:`~.Register` object *op* 
+@@ -214,8 +212,7 @@ class X86Encoder(Visitor2):
+ 		:param `.Register` op:
+ 		:param `.GPart` g:		
+ 		"""		
+-		#raise ExerciseError("X86Encoder::visit_GPart")
+-		self.ModRM.GGG = op.IntValue()
++		raise ExerciseError("X86Encoder::visit_GPart")
+ 
+ 	def visit_RegOrMem_Register(self,op,m):      
+ 		"""For RegOrMem where the *op* a :class:`~.Register`, set the ModRM field
+@@ -225,9 +222,7 @@ class X86Encoder(Visitor2):
+ 		:param `.Register` op:
+ 		:param `.RegOrMem` m:		
+ 		"""		
+-		#raise ExerciseError("X86Encoder::visit_RegOrMem_Register")
+-		self.ModRM.MOD = 3
+-		self.ModRM.RM  = op.IntValue()
++		raise ExerciseError("X86Encoder::visit_RegOrMem_Register")
+ 
+ 	def visit_RegOrMem_Mem16(self,mem,m):
+ 		"""For RegOrMem where the *op* a :class:`~.Mem16`, invoke the 
+@@ -237,8 +232,7 @@ class X86Encoder(Visitor2):
+ 		:param `.Mem16` mem:
+ 		:param `.RegOrMem` m:		
+ 		"""		
+-		#raise ExerciseError("X86Encoder::visit_RegOrMem_Mem16")
+-		self.ModRM.EncodeFromParts(mem.BaseReg,mem.IndexReg,mem.Disp)
++		raise ExerciseError("X86Encoder::visit_RegOrMem_Mem16")
+ 
+ 	def visit_RegOrMem_Mem32(self,mem,m):
+ 		"""For RegOrMem where the *op* a :class:`~.Mem32`, invoke the 
+@@ -248,8 +242,7 @@ class X86Encoder(Visitor2):
+ 		:param `.Mem32` mem:
+ 		:param `.RegOrMem` m:		
+ 		"""		
+-		#raise ExerciseError("X86Encoder::visit_RegOrMem_Mem32")
+-		self.ModRM.EncodeFromParts(mem.BaseReg,mem.IndexReg,mem.ScaleFac,mem.Disp)
++		raise ExerciseError("X86Encoder::visit_RegOrMem_Mem32")
+ 		
+ 	def visit_Immediate_MemExpr(self,op,i): 
+ 		"""For ImmEnc where the *op* is a :class:`~.MemExpr`, write its *Disp*
+@@ -259,8 +252,7 @@ class X86Encoder(Visitor2):
+ 		:param `.MemExpr` op:
+ 		:param `.ImmEnc` i:		
+ 		"""		
+-		#raise ExerciseError("X86Encoder::visit_Immediate_MemExpr")
+-		self.AppendImmediate(op.Disp,2 if isinstance(op,Mem16) else 4)
++		raise ExerciseError("X86Encoder::visit_Immediate_MemExpr")
+ 
+ 	def visit_Immediate_FarTarget(self,op,i):
+ 		"""For ImmEnc where the *op* is a :class:`~.FarTarget`, write its 
+@@ -270,9 +262,7 @@ class X86Encoder(Visitor2):
+ 		:param `.FarTarget` op:
+ 		:param `.ImmEnc` i:		
+ 		"""		
+-		#raise ExerciseError("X86Encoder::visit_Immediate_FarTarget")
+-		self.AppendImmediate(op.Off,2 if isinstance(op,AP16) else 4)
+-		self.AppendImmediate(op.Seg,2)
++		raise ExerciseError("X86Encoder::visit_Immediate_FarTarget")
+ 
+ 	def visit_Immediate_Ib(self,op,i): 
+ 		"""For ImmEnc where the *op* is an :class:`~.Ib`, write its *value* member
+@@ -281,8 +271,7 @@ class X86Encoder(Visitor2):
+ 		:param `.Ib` op:
+ 		:param `.ImmEnc` i:		
+ 		"""		
+-		#raise ExerciseError("X86Encoder::visit_Immediate_Ib")
+-		self.AppendImmediate(op.value,1)
++		raise ExerciseError("X86Encoder::visit_Immediate_Ib")
+ 
+ 	def visit_Immediate_Iw(self,op,i): 
+ 		"""For ImmEnc where the *op* is an :class:`~.Iw`, write its *value* member
+@@ -291,8 +280,7 @@ class X86Encoder(Visitor2):
+ 		:param `.Iw` op:
+ 		:param `.ImmEnc` i:		
+ 		"""		
+-		#raise ExerciseError("X86Encoder::visit_Immediate_Iw")
+-		self.AppendImmediate(op.value,2)
++		raise ExerciseError("X86Encoder::visit_Immediate_Iw")
+ 
+ 	def visit_Immediate_Id(self,op,i): 
+ 		"""For ImmEnc where the *op* is an :class:`~.Id`, write its *value* member
+@@ -301,9 +289,7 @@ class X86Encoder(Visitor2):
+ 		:param `.Id` op:
+ 		:param `.ImmEnc` i:		
+ 		"""		
+-		#raise ExerciseError("X86Encoder::visit_Immediate_Id")
+-		self.AppendImmediate(op.value,4)
+-
++		raise ExerciseError("X86Encoder::visit_Immediate_Id")
+ 		
+ 	def visit_Immediate_JccTarget(self,op,i):
+ 		"""For JccTargets, we treat them all as long jumps.  These are "relatively-
+@@ -338,8 +324,7 @@ class X86Encoder(Visitor2):
+ 		:param `.Operand` op:
+ 		:param `.SizePrefix` z:		
+ 		"""
+-		#raise ExerciseError("X86Encoder::visit_SizePrefix")
+-		self.visit(op,z.yes if self.sizepfx else z.no)
++		raise ExerciseError("X86Encoder::visit_SizePrefix")
+ 
+ 	def visit_AddrPrefix(self,op,a): 
+ 		"""Visit the appropriate child depending upon whether an address prefix is
+@@ -348,6 +333,5 @@ class X86Encoder(Visitor2):
+ 		:param `.Operand` op:
+ 		:param `.AddrPrefix` a:		
+ 		"""
+-		#raise ExerciseError("X86Encoder::visit_AddrPrefix")
+-		self.visit(op,a.yes if self.addrpfx else a.no)
++		raise ExerciseError("X86Encoder::visit_AddrPrefix")
+ 
+diff --git a/Pandemic/X86/X86ModRM.py b/Pandemic/X86/X86ModRM.py
+index 5fb268a..6ca42a3 100644
+--- a/Pandemic/X86/X86ModRM.py
++++ b/Pandemic/X86/X86ModRM.py
+@@ -131,16 +131,14 @@ class ModRM16(object):
+ 		# base or index register.
+ 		if self.MOD == 0 and self.RM == 6: 
+ 			# Hint: call ModRM16WithDisp.  What should the parameters be?
+-			# raise ExerciseError("ModRM16::Interpret: Offset-only special case")
+-			return ModRM16WithDisp(None,None)
++			raise ExerciseError("ModRM16::Interpret: Offset-only special case")
+ 		
+ 		# Otherwise, the base and index registers are specified by m.RM.
+ 	
+ 		# Hint: ultimately, you will return the result of calling ModRM16WithDisp.
+ 		# You will need to use the proper registers as specified by m.RM.
+ 		# Take a look at the declaration of the data item named modrm_16.
+-		# raise ExerciseError("ModRM16::Interpret: General case")
+-		return ModRM16WithDisp(*(modrm_16[self.RM]))
++		raise ExerciseError("ModRM16::Interpret: General case")
+ 	
+ 	# This function is here to allow us to encode SIB bytes in the 32-bit case
+ 	# (that class is derived from this one).
+@@ -184,40 +182,32 @@ class ModRM16(object):
+ 		# Is it the case where only an offset is specified?  If so, set MOD=0,RM=6,
+ 		# and the displacement Disp with size 2.  Then, return.
+ 		if BaseReg == None and IndexReg == None:
+-			# raise ExerciseError("ModRM16::EncodeFromParts: Displacement only")
+-			self.RM   = 6
+-			SetModDisp(0,Disp if Disp is not None else 0,2)
+-			return
++			raise ExerciseError("ModRM16::EncodeFromParts: Displacement only")
+ 		
+ 		had_Disp = False
+ 		# A displacement was not specified.  Set MOD to 0.  We may change it later
+ 		# for [Bp], whose encoding mandates a displacement.
+ 		if Disp == None or Disp == 0:
+-			# raise ExerciseError("ModRM16::EncodeFromParts: No displacement")
+-			self.MOD = 0
++			raise ExerciseError("ModRM16::EncodeFromParts: No displacement")
+ 			
+ 		# A displacement was specified, so set the displacement information.
+ 		else:
+ 			had_Disp = True
+ 			# Check if the displacement can be encoded in 8 bits.  Set the MOD and
+ 			# displacement information.
+-			# raise ExerciseError("ModRM16::EncodeFromParts: Displacement")
+-			mod,dispsize = (1,1) if Disp >= 0xFF80 or Disp < 0x80 else (2,2)
+-			SetModDisp(mod,Disp,dispsize)
++			raise ExerciseError("ModRM16::EncodeFromParts: Displacement")
+ 		
+ 		# A base register of Bp requires a displacement.  If no displacement has
+ 		# already been specified, set the MOD and displacement information for a
+ 		# 1-byte displacement 0.
+ 		if BaseReg == Bp and not had_Disp:
+-			# raise ExerciseError("ModRM16::EncodeFromParts: Bp, no displacement")
+-			SetModDisp(1,0,1)
++			raise ExerciseError("ModRM16::EncodeFromParts: Bp, no displacement")
+ 		
+ 		# Set self.RM to the position of the base/index register pair within the list 
+ 		# modrm_16.  This will throw an exception if the register combination is
+ 		# invalid.
+ 		try:
+-			# raise ExerciseError("ModRM16::EncodeFromParts: Set RM")
+-			self.RM = modrm_16.index((BaseReg,IndexReg))
++			raise ExerciseError("ModRM16::EncodeFromParts: Set RM")
+ 		except e:
+ 			print "Invalid ModRM/16 register pair"
+ 			raise IndexError
+@@ -374,13 +364,11 @@ class ModRM32(ModRM16):
+   	
+ 		# Is it the case that the expression is just a DWORD?
+ 		if self.MOD == 0 and self.RM == 5: 
+-			# raise ExerciseError("ModRM32::Interpret: Displacement only")
+-			return ModRM32WithDisp(None,None,0)
++			raise ExerciseError("ModRM32::Interpret: Displacement only")
+ 		
+ 		# Check to see if a SIB is specified.  If not, no index register is used.
+ 		if self.RM != 4: 
+-			# raise ExerciseError("ModRM32::Interpret: No SIB")
+-			return ModRM32WithDisp(AdjustReg32(self.RM),None,0)
++			raise ExerciseError("ModRM32::Interpret: No SIB")
+ 		
+ 		# Set IndexReg and ScaleFac to empty at first.
+ 		IndexReg,ScaleFac = None,0
+@@ -389,19 +377,16 @@ class ModRM32(ModRM16):
+ 		# ESP)?  If so, set IndexReg with the adjusted register and set ScaleFac
+ 		# to the SIB's SS field.
+ 		if self.SIB.INDEX != 4:
+-			# raise ExerciseError("ModRM32::Interpret: Index/Scale")
+-			IndexReg,ScaleFac = AdjustReg32(self.SIB.INDEX),self.SIB.SCALE
++			raise ExerciseError("ModRM32::Interpret: Index/Scale")
+ 		
+ 		# Is it the case where MOD == 0 and BASE == 5?  In this case, there is no 
+ 		# base register.  Call ModRM32WithDisp and return its value.
+ 		if self.MOD == 0 and self.SIB.BASE == 5:
+-			# raise ExerciseError("ModRM32::Interpret: No base register")
+-			return ModRM32WithDisp(None,IndexReg,ScaleFac)
++			raise ExerciseError("ModRM32::Interpret: No base register")
+   	
+ 		# The full SIB case applies.  We had a base register (in SIB.SREG), an index
+ 		# (in IndexReg) and scale factor (in ScaleFac).
+-		#raise ExerciseError("ModRM32::Interpret: SIB general case")
+-		return ModRM32WithDisp(AdjustReg32(self.SIB.BASE),IndexReg,ScaleFac)
++		raise ExerciseError("ModRM32::Interpret: SIB general case")
+ 
+ 	def EncodeFromParts(self,BaseReg,IndexReg,ScaleFac,Disp):
+ 		"""Given base and index registers, a scale factor, and an integer 
+@@ -420,32 +405,25 @@ class ModRM32(ModRM16):
+ 		# Is it the case where only an offset is specified?  If so, set MOD=0,RM=5,
+ 		# and the displacement Disp with size 4, and return.
+ 		if BaseReg == None and IndexReg == None:
+-			#raise ExerciseError("ModRM32::EncodeFromParts: Displacement only")
+-			self.RM   = 5
+-			SetModDisp(0,0 if Disp is None else Disp,4)
+-			return
++			raise ExerciseError("ModRM32::EncodeFromParts: Displacement only")
+ 		
+ 		had_Disp = False
+ 	
+ 		# A displacement was not specified.  Set MOD to 0.  We may need to change it
+ 		# if some encoding mandates a displacement.
+ 		if Disp == None or Disp == 0:
+-			#raise ExerciseError("ModRM32::EncodeFromParts: No displacement")
+-			self.MOD = 0
++			raise ExerciseError("ModRM32::EncodeFromParts: No displacement")
+ 			
+ 		# A displacement was specified.
+ 		else:
+ 			had_Disp = True
+ 			# Check if the displacement can be encoded in 8 bits.
+-			#raise ExerciseError("ModRM32::EncodeFromParts: Displacement")
+-			mod,dispsize = (1,1) if Disp >= 0xFFFFFF80 or Disp < 0x80 else (2,4)
+-			SetModDisp(mod,Disp,dispsize)
++			raise ExerciseError("ModRM32::EncodeFromParts: Displacement")
+ 			
+ 		# Special case:  base register of EBP requires a displacement.  Create a byte
+ 		# 0 if a displacement was not specified.
+ 		if BaseReg == Ebp and not had_Disp:
+-			#raise ExerciseError("ModRM32::EncodeFromParts: EBP, no displacement")
+-			SetModDisp(1,0,1)
++			raise ExerciseError("ModRM32::EncodeFromParts: EBP, no displacement")
+ 	
+ 		# Was the index register not present (i.e., no SIB byte required)?
+ 		if IndexReg is None:
+@@ -453,14 +431,10 @@ class ModRM32(ModRM16):
+ 			# Special case:  a SIB byte is required if ESP is the base register.
+ 			# Create a 
+ 			if BaseReg == Esp:
+-				#raise ExerciseError("ModRM32::EncodeFromParts: ESP base register")
+-				self.SIB.SCALE = 0
+-				self.SIB.INDEX = Esp.IntValue()
+-				self.SIB.BASE  = Esp.IntValue()
++				raise ExerciseError("ModRM32::EncodeFromParts: ESP base register")
+ 	
+ 			# No special case:  put the register number into the RM field.
+-			#raise ExerciseError("ModRM32::EncodeFromParts: Set RM")
+-			self.RM = BaseReg.IntValue()
++			raise ExerciseError("ModRM32::EncodeFromParts: Set RM")
+ 			return
+ 		
+ 		# From here on, we handle the SIB byte.
+@@ -468,16 +442,11 @@ class ModRM32(ModRM16):
+ 	
+ 		# If there's no base register, we require a DWORD displacement and MOD=0.
+ 		if BaseReg == None:
+-			#raise ExerciseError("ModRM32::EncodeFromParts: No base register")
+-			self.SIB.BASE = Ebp.IntValue()
+-			SetModDisp(0,Disp if Disp is not None else 0,4)
++			raise ExerciseError("ModRM32::EncodeFromParts: No base register")
+ 	
+ 		# Otherwise, store the base register index into the SREG field of the SIB.
+ 		else:
+-			#raise ExerciseError("ModRM32::EncodeFromParts: Base register")
+-			self.SIB.BASE = BaseReg.IntValue()
++			raise ExerciseError("ModRM32::EncodeFromParts: Base register")
+ 	
+ 		# Set the ScaleFac and adjust IndexReg.
+-		#raise ExerciseError("ModRM32::EncodeFromParts: Scale/Index")
+-		self.SIB.SCALE = ScaleFac
+-		self.SIB.INDEX = IndexReg.IntValue()
+\ No newline at end of file
++		raise ExerciseError("ModRM32::EncodeFromParts: Scale/Index")
+diff --git a/Pandemic/X86/X86TypeChecker.py b/Pandemic/X86/X86TypeChecker.py
+index 00a5166..39840d9 100644
+--- a/Pandemic/X86/X86TypeChecker.py
++++ b/Pandemic/X86/X86TypeChecker.py
+@@ -225,12 +225,7 @@ class X86TypeChecker(Visitor2):
+ 		:param `.SizePrefix` z:
+ 		:rtype: TypeCheckInfo
+ 		"""
+-		#raise ExerciseError("X86TypeChecker::visit_SizePrefix")
+-		my = s.visit(op,z.yes)
+-		if my is not None: return SizePFX(True,my)
+-		mn = s.visit(op,z.no)
+-		if mn is not None: return SizePFX(False,mn)
+-		return None
++		raise ExerciseError("X86TypeChecker::visit_SizePrefix")
+ 
+ 	def visit_AddrPrefix(s,op,a): 
+ 		"""See comments for :meth:`visit_SizePrefix`.
+@@ -239,12 +234,7 @@ class X86TypeChecker(Visitor2):
+ 		:param `.SizePrefix` z:
+ 		:rtype: TypeCheckInfo
+ 		"""
+-		#raise ExerciseError("X86TypeChecker::visit_AddrPrefix")
+-		my = s.visit(op,a.yes)
+-		if my is not None: return AddrPFX(True,my)
+-		mn = s.visit(op,a.no)
+-		if mn is not None: return AddrPFX(False,mn)
+-		return None
++		raise ExerciseError("X86TypeChecker::visit_AddrPrefix")
+ 		
+ 	def visit_Exact(s,op,a): 
+ 		"""For Exact AOTDL elements, *op* must match *a*'s *value* member exactly.
+@@ -254,8 +244,7 @@ class X86TypeChecker(Visitor2):
+ 		:rtype: TypeCheckInfo
+ 		"""
+ 		if op == a.value:
+-			#raise ExerciseError("X86TypeChecker::visit_Exact")
+-			return MATCHES()
++			raise ExerciseError("X86TypeChecker::visit_Exact")
+ 		return None
+ 	
+ 	def visit_ExactSeg(s,op,a): 
+@@ -269,14 +258,12 @@ class X86TypeChecker(Visitor2):
+ 		:rtype: TypeCheckInfo
+ 		"""
+ 		if op == a.value: 
+-			#raise ExerciseError("X86TypeChecker::visit_ExactSeg: Exact match")
+-			return MATCHES()
++			raise ExerciseError("X86TypeChecker::visit_ExactSeg: Exact match")
+ 
+ 		if isinstance(op,MemExpr) and isinstance(a.value,MemExpr):
+ 			# Make a copy of a.value with op's segment, and compare it to op.
+ 			if a.value(op.Seg) == op: 
+-				#raise ExerciseError("X86TypeChecker::visit_ExactSeg: Segment differs")
+-				return SegPFX(op.Seg)
++				raise ExerciseError("X86TypeChecker::visit_ExactSeg: Segment differs")
+ 		return None
+ 
+ 	def visit_RegOrMem(s,op,m):
+@@ -293,8 +280,7 @@ class X86TypeChecker(Visitor2):
+ 		:rtype: TypeCheckInfo
+ 		"""
+ 		if m.reg is not None and type(op) == type(m.reg):
+-			#raise ExerciseError("X86TypeChecker::visit_RegOrMem:Register")
+-			return MATCHES()
++			raise ExerciseError("X86TypeChecker::visit_RegOrMem:Register")
+ 
+ 		if m.mem is not None and isinstance(op,MemExpr):
+ 			# For certain memory-related AOTs, we are lenient about the sizes of 
+@@ -305,16 +291,14 @@ class X86TypeChecker(Visitor2):
+ 				
+ 				# Check whether op's segment differs from its default segment.  If so,
+ 				# indicate that that particular segment prefix is required.
+-				#raise ExerciseError("X86TypeChecker::visit_RegOrMem:Memory:Segment")
+-				#s_tc = None
++				raise ExerciseError("X86TypeChecker::visit_RegOrMem:Memory:Segment")
++				s_tc = None
+ 				
+-				s_tc = SegPFX(op.Seg) if op.Seg != op.DefaultSeg() else None
+ 				# Check whether op is a Mem16, i.e., requires an ADDRSIZE prefix.  a_tc
+ 				# should be created based on s_tc.
+-				#raise ExerciseError("X86TypeChecker::visit_RegOrMem:Memory:Addrsize")
+-				#a_tc = None
++				raise ExerciseError("X86TypeChecker::visit_RegOrMem:Memory:Addrsize")
++				a_tc = None
+ 
+-				a_tc = AddrPFX(isinstance(op,Mem16),s_tc)
+ 				return a_tc
+ 		return None
+ 	
+@@ -327,8 +311,7 @@ class X86TypeChecker(Visitor2):
+ 		:rtype: TypeCheckInfo
+ 		"""
+ 		if type(op) == type(a.archetype):
+-			#raise ExerciseError("X86TypeChecker::visit_GPart")
+-			return MATCHES()
++			raise ExerciseError("X86TypeChecker::visit_GPart")
+ 		return None
+ 	
+ 	def visit_Immediate_MemExpr(s,op,a):
+@@ -349,12 +332,10 @@ class X86TypeChecker(Visitor2):
+ 			if a.archetype.size == op.size:
+ 				# Check the segment and address size prefix requirements, identically
+ 				# to the RegOrMem memory case.
+-				#s_tc = None
+-				#a_tc = None
+-				#raise ExerciseError("X86TypeChecker::visit_Immediate_MemExpr")
++				s_tc = None
++				a_tc = None
++				raise ExerciseError("X86TypeChecker::visit_Immediate_MemExpr")
+ 
+-				s_tc = SegPFX(op.Seg) if op.Seg != op.DefaultSeg() else None
+-				a_tc = AddrPFX(isinstance(op,Mem16),s_tc)
+ 				return a_tc
+ 		return None
+ 
+@@ -369,8 +350,7 @@ class X86TypeChecker(Visitor2):
+ 		:rtype: TypeCheckInfo
+ 		"""
+ 		if type(op) == type(a.archetype):
+-			#raise ExerciseError("X86TypeChecker::visit_Immediate_FarTarget")
+-			return MATCHES() 
++			raise ExerciseError("X86TypeChecker::visit_Immediate_FarTarget")
+ 		return None
+ 
+ 	def visit_Immediate_JccTarget(s,op,a):
+@@ -383,8 +363,7 @@ class X86TypeChecker(Visitor2):
+ 		:rtype: TypeCheckInfo
+ 		"""
+ 		if isinstance(op,JccTarget): 
+-			#raise ExerciseError("X86TypeChecker::visit_Immediate_JccTarget")
+-			return MATCHES()
++			raise ExerciseError("X86TypeChecker::visit_Immediate_JccTarget")
+ 		return None
+ 
+ 	def visit_Immediate_Immediate(s,op,a):
+@@ -397,8 +376,7 @@ class X86TypeChecker(Visitor2):
+ 		:rtype: TypeCheckInfo
+ 		"""
+ 		if type(op) == type(a.archetype):
+-			#raise ExerciseError("X86TypeChecker::visit_Immediate_Immediate")
+-			return MATCHES() 
++			raise ExerciseError("X86TypeChecker::visit_Immediate_Immediate")
+ 		return None
+ 	
+ 	def visit_SignExtImm_Iw(s,op,a):
+@@ -412,8 +390,7 @@ class X86TypeChecker(Visitor2):
+ 		:rtype: TypeCheckInfo
+ 		"""
+ 		if isinstance(op,Immediate) and op.value < 0x80 or op.value >= 0xFF80:
+-			#raise ExerciseError("X86TypeChecker::visit_SignExtImm_Iw")
+-			return MATCHES()
++			raise ExerciseError("X86TypeChecker::visit_SignExtImm_Iw")
+ 		return None
+ 		
+ 	def visit_SignExtImm_Id(s,op,a):
+@@ -427,6 +404,5 @@ class X86TypeChecker(Visitor2):
+ 		:rtype: TypeCheckInfo
+ 		"""
+ 		if op.value < 0x80 or op.value >= 0xFFFFFF80:
+-			#raise ExerciseError("X86TypeChecker::visit_SignExtImm_Id")
+-			return MATCHES()
++			raise ExerciseError("X86TypeChecker::visit_SignExtImm_Id")
+ 		return None
+diff --git a/Python/Iterator.py b/Python/Iterator.py
+index 90aadf5..db7c070 100644
+--- a/Python/Iterator.py
++++ b/Python/Iterator.py
+@@ -5,8 +5,6 @@ test_product1_expected = set([('a', 'd'),('a', 'e'),('a', 'f'),('b', 'd'),('b',
+ # Exercise:  use itertools.product to return an iterator that produces the values
+ # shown above under test_product1_expected (though not necessarily in order).
+ def test_product1():
+-	x,y = "abc","def"
+-	return itertools.product(x,y)
+ 	raise NotImplementedError("test_product1")
+ 	return itertools.product(None)
+ 
+@@ -15,8 +13,6 @@ test_product2_expected = set([(1, 2, 3),(1, 2, 4),(1, 3, 3),(1, 3, 4),(2, 2, 3),
+ # Exercise:  use itertools.product to return an iterator that produces the values
+ # shown above under test_product2_expected (though not necessarily in order).
+ def test_product2():
+-	x,y,z = [1,2],[2,3],[3,4]
+-	return itertools.product(x,y,z)
+ 	raise NotImplementedError("test_product2")
+ 	return itertools.product(None)
+ 
+@@ -29,7 +25,6 @@ test_ifilter1_expected = set([(1, 2, 3),(1, 2, 4),(1, 3, 3),(1, 3, 4),(2, 3, 3),
+ def test_ifilter1():
+ 	g = test_product2()
+ 	def filterfn((a,b,c)):
+-		return a != b
+ 		raise NotImplementedError("test_ifilter1")
+ 	return itertools.ifilter(filterfn,g)
+ 
+@@ -42,7 +37,6 @@ test_imap1_expected = set(['ad','ae','af','bd','be','bf','cd','ce','cf'])
+ def test_imap1():
+ 	g = test_product1()
+ 	def mapfn((a,b)):
+-		return a+b
+ 		raise NotImplementedError("test_imap1")
+ 	return itertools.imap(filterfn,g)
+ 
+diff --git a/Python/Transform.py b/Python/Transform.py
+index 9604ea1..233cb2f 100644
+--- a/Python/Transform.py
++++ b/Python/Transform.py
+@@ -7,8 +7,7 @@ test_map1_expected = [2,4,6]
+ def test_map1():
+ 	l = [1,2,3]
+ 	def mapfn(i):
+-		#raise ExerciseError("Functional::Map1")
+-		return i*2
++		raise ExerciseError("Functional::Map1")
+ 	return map(mapfn,l)
+ 
+ test_map2_expected = [(1,2,3),(4,5,6),(7,8,9)]
+@@ -18,8 +17,7 @@ test_map2_expected = [(1,2,3),(4,5,6),(7,8,9)]
+ def test_map2():
+ 	l = [2,5,8]
+ 	def mapfn(i):
+-		#raise ExerciseError("Functional::Map2")
+-		return (i-1,i,i+1)
++		raise ExerciseError("Functional::Map2")
+ 	return map(mapfn,l)
+ 
+ test_map3_expected = [(1,True),(2,True),(3,True)]
+@@ -29,8 +27,7 @@ test_map3_expected = [(1,True),(2,True),(3,True)]
+ def test_map3():
+ 	l = [1,2,3]
+ 	def mapfn(i):
+-		#raise ExerciseError("Functional::Map3")
+-		return (i,True)
++		raise ExerciseError("Functional::Map3")
+ 	return map(mapfn,l)
+ 
+ test_filter1_expected = [60,61,62,63,64]
+@@ -43,11 +40,10 @@ def raise_exerror(string):
+ def test_filter1():
+ 	# This is a list [0,1,2,3,4,...,99]
+ 	l = range(0,100)
+-	# Exercise: replace the call to raise_exerror in the lambda with some boolean
+-	# expression involving the variable i.
+ 	
+-	#return filter(lambda i: raise_exerror("Functional::Filter1"),l)
+-	return filter(lambda i: i < 65 and i > 59,l)
++	# Exercise: replace the call to raise_exerror in the lambda with some boolean
++	# expression involving the variable i.	
++	return filter(lambda i: raise_exerror("Functional::Filter1"),l)
+ 
+ test_filter2_expected = [0,1,2,97,98,99]
+ 
+@@ -55,11 +51,10 @@ test_filter2_expected = [0,1,2,97,98,99]
+ # as above under test_filter2_expected.
+ def test_filter2():
+ 	l = range(0,100)
++
+ 	# Exercise: replace the call to raise_exerror in the lambda with some boolean
+-	# expression involving the variable i.
+-	
+-	#return filter(lambda i: raise_exerror("Functional::Filter2"),l)
+-	return filter(lambda i: i < 3 or i > 96,l)
++	# expression involving the variable i.	
++	return filter(lambda i: raise_exerror("Functional::Filter2"),l)
+ 
+ test_filter3_expected = [(1,True),(3,True)]
+ 
+@@ -68,11 +63,10 @@ test_filter3_expected = [(1,True),(3,True)]
+ # that the integer part of a Const is kept in a field called "int".
+ def test_filter3():
+ 	l = [(1,True),(2,False),(3,True),(4,False)]
++
+ 	# Exercise: replace the call to raise_exerror in the lambda with some boolean
+ 	# expression involving the variable i.
+-	
+-	#return filter(lambda i: raise_exerror("Functional::Filter3"),l)
+-	return filter(lambda (i,b): b,l)
++	return filter(lambda i: raise_exerror("Functional::Filter3"),l)
+ 
+ test_reduce1_expected = 3628800
+ 
+@@ -81,10 +75,8 @@ test_reduce1_expected = 3628800
+ def test_reduce1():
+ 	l = xrange(1,11) # [1,...,10]
+ 	def reducefn(a,i):
+-		#raise ExerciseError("Functional::Reduce1")
+-		return a*i
+-	initial_value = 1
+-	#initial_value = 0
++		raise ExerciseError("Functional::Reduce1")
++	initial_value = 0
+ 	return reduce(reducefn,l,initial_value)
+ 
+ test_reduce2_expected = 20
+@@ -95,10 +87,8 @@ def test_reduce2():
+ 	# [1,2,3,4]
+ 	l = range(1,4)
+ 	def reducefn(a,c):
+-		#raise ExerciseError("Functional::Reduce2")
+-		return a+c
+-	initial_value = 0
+-	#initial_value = 0
++		raise ExerciseError("Functional::Reduce2")
++	initial_value = 1
+ 	return reduce(reducefn,l,initial_value)
+ 
+ test_reduce3_expected = "boom bam kablow blaow"
+@@ -108,10 +98,8 @@ test_reduce3_expected = "boom bam kablow blaow"
+ def test_reduce3():
+ 	l = ["bam","kablow","blaow"]
+ 	def reducefn(e,n):
+-		#raise ExerciseError("Functional::Reduce3")
+-		return e + " " + n
++		raise ExerciseError("Functional::Reduce3")
+ 	initial_value = "replaceme"
+-	#initial_value = "boom"
+ 	return reduce(reducefn,l,initial_value)
+ 
+ if __name__ == "__main__":
+diff --git a/Python/__init__.py b/Python/__init__.py
+deleted file mode 100644
+index e69de29..0000000

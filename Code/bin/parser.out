@@ -1,0 +1,150 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> var
+Rule 1     expr -> SUB expr
+Rule 2     expr -> NOT expr
+Rule 3     expr -> expr ADD expr
+Rule 4     expr -> expr SUB expr
+Rule 5     expr -> expr SDIV expr
+Rule 6     expr -> expr UDIV expr
+Rule 7     expr -> expr SMOD expr
+Rule 8     expr -> expr UMOD expr
+Rule 9     expr -> expr MUL expr
+Rule 10    expr -> expr SHL expr
+Rule 11    expr -> expr SAR expr
+Rule 12    expr -> expr SHR expr
+Rule 13    expr -> expr SLT expr
+Rule 14    expr -> expr ULT expr
+Rule 15    expr -> expr SLE expr
+Rule 16    expr -> expr ULE expr
+Rule 17    expr -> expr EQ expr
+Rule 18    expr -> expr NE expr
+Rule 19    expr -> expr AND expr
+Rule 20    expr -> expr XOR expr
+Rule 21    expr -> expr OR expr
+Rule 22    cast -> UNSIGNED
+Rule 23    cast -> SIGNED
+Rule 24    cast -> HIGH
+Rule 25    cast -> LOW
+Rule 26    expr -> CAST LPAREN cast COMMA NUM COMMA expr RPAREN
+Rule 27    expr -> LOAD LPAREN expr COMMA expr COMMA NUM RPAREN
+Rule 28    expr -> STORE LPAREN expr COMMA expr COMMA expr COMMA NUM RPAREN
+Rule 29    expr -> expr QMARK expr COLON expr
+Rule 30    expr -> TRUE
+Rule 31    expr -> FALSE
+Rule 32    expr -> CONST
+Rule 33    var -> VARNAME
+Rule 34    var -> MEMNAME
+Rule 35    var -> RVAR
+Rule 36    expr -> var
+Rule 37    expr -> LPAREN expr RPAREN
+Rule 38    stmt -> var EQUALS expr SEMI
+Rule 39    stmt -> ASSERT LPAREN expr RPAREN SEMI
+Rule 40    stmt -> JMP LPAREN expr RPAREN SEMI
+Rule 41    stmt -> CJMP LPAREN expr COMMA expr COMMA expr RPAREN SEMI
+Rule 42    stmt -> LOC NUM
+Rule 43    stmt -> COMMENT
+Rule 44    stmtlist -> stmt
+Rule 45    stmtlist -> stmtlist stmt
+
+Terminals, with rules where they appear
+
+ADD                  : 3
+AND                  : 19
+ASSERT               : 39
+CAST                 : 26
+CJMP                 : 41
+COLON                : 29
+COMMA                : 26 26 27 27 28 28 28 41 41
+COMMENT              : 43
+CONST                : 32
+EQ                   : 17
+EQUALS               : 38
+FALSE                : 31
+HIGH                 : 24
+JMP                  : 40
+LOAD                 : 27
+LOC                  : 42
+LOW                  : 25
+LPAREN               : 26 27 28 37 39 40 41
+MEMNAME              : 34
+MUL                  : 9
+NE                   : 18
+NOT                  : 2
+NUM                  : 26 27 28 42
+OR                   : 21
+QMARK                : 29
+RPAREN               : 26 27 28 37 39 40 41
+RVAR                 : 35
+SAR                  : 11
+SDIV                 : 5
+SEMI                 : 38 39 40 41
+SHL                  : 10
+SHR                  : 12
+SIGNED               : 23
+SLE                  : 15
+SLT                  : 13
+SMOD                 : 7
+STORE                : 28
+SUB                  : 1 4
+TRUE                 : 30
+UDIV                 : 6
+ULE                  : 16
+ULT                  : 14
+UMOD                 : 8
+UNSIGNED             : 22
+VARNAME              : 33
+XOR                  : 20
+error                : 
+
+Nonterminals, with rules where they appear
+
+cast                 : 26
+expr                 : 1 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 10 10 11 11 12 12 13 13 14 14 15 15 16 16 17 17 18 18 19 19 20 20 21 21 26 27 27 28 28 28 29 29 29 37 38 39 40 41 41 41
+stmt                 : 44 45
+stmtlist             : 45
+var                  : 36 38 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . var
+    (33) var -> . VARNAME
+    (34) var -> . MEMNAME
+    (35) var -> . RVAR
+
+    VARNAME         shift and go to state 2
+    MEMNAME         shift and go to state 4
+    RVAR            shift and go to state 3
+
+    var                            shift and go to state 1
+
+state 1
+
+    (0) S' -> var .
+
+
+
+state 2
+
+    (33) var -> VARNAME .
+
+    $end            reduce using rule 33 (var -> VARNAME .)
+
+
+state 3
+
+    (35) var -> RVAR .
+
+    $end            reduce using rule 35 (var -> RVAR .)
+
+
+state 4
+
+    (34) var -> MEMNAME .
+
+    $end            reduce using rule 34 (var -> MEMNAME .)
+
